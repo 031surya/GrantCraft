@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+venv/
+
+# Environment variables
+.env
+.env.local
+
+# Next.js
+.next/
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
