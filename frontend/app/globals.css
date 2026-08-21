@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+/* GrantCraft uses manual theme switching.
+   The operating system theme does NOT control the UI. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -12,15 +16,211 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: #f8fafc;
+}
+
+html.dark {
+  background: #050816;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html.dark body {
+  background: #050816;
+  color: #ffffff;
+}
+
+/* =========================================================
+   GRANTCRAFT CORE ORBIT LABELS
+   ========================================================= */
+
+@keyframes grantcraft-orbit-1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(4px, -6px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-3px, -10px) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-5px, -4px) rotate(1deg);
+  }
+}
+
+@keyframes grantcraft-orbit-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-6px, 3px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(-10px, -3px) rotate(1deg);
+  }
+  75% {
+    transform: translate(-4px, -6px) rotate(-1deg);
+  }
+}
+
+@keyframes grantcraft-orbit-3 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(3px, 7px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(-2px, 10px) rotate(1deg);
+  }
+  75% {
+    transform: translate(5px, 4px) rotate(-1deg);
+  }
+}
+
+@keyframes grantcraft-orbit-4 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(7px, -3px) rotate(1deg);
+  }
+  50% {
+    transform: translate(10px, 4px) rotate(-1deg);
+  }
+  75% {
+    transform: translate(4px, 7px) rotate(1deg);
+  }
+}
+
+.core-orbit-1 {
+  animation: grantcraft-orbit-1 4.5s ease-in-out infinite;
+}
+
+.core-orbit-2 {
+  animation: grantcraft-orbit-2 5.2s ease-in-out infinite;
+}
+
+.core-orbit-3 {
+  animation: grantcraft-orbit-3 4.8s ease-in-out infinite;
+}
+
+.core-orbit-4 {
+  animation: grantcraft-orbit-4 5.5s ease-in-out infinite;
+}
+
+.core-orbit-5 {
+  animation: grantcraft-orbit-2 4.2s ease-in-out infinite reverse;
+}
+
+.core-orbit-6 {
+  animation: grantcraft-orbit-3 5.7s ease-in-out infinite reverse;
+}
+
+.core-orbit-7 {
+  animation: grantcraft-orbit-4 4.6s ease-in-out infinite reverse;
+}
+
+.core-orbit-8 {
+  animation: grantcraft-orbit-1 5.9s ease-in-out infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .core-orbit-1,
+  .core-orbit-2,
+  .core-orbit-3,
+  .core-orbit-4,
+  .core-orbit-5,
+  .core-orbit-6,
+  .core-orbit-7,
+  .core-orbit-8 {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   GRANTCRAFT MODERN CURSOR
+   ========================================================= */
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"] {
+    cursor: none;
+  }
+
+  .grant-cursor {
+    position: fixed;
+    z-index: 99999;
+    width: 16px;
+    height: 20px;
+    pointer-events: none;
+    transform: translate(-2px, -2px);
+    transition:
+      transform 120ms ease,
+      opacity 150ms ease;
+  }
+
+  /* Small, clean precision pointer */
+  .grant-cursor-arrow {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+
+    border-top: 12px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 10px solid #07111f;
+
+    filter:
+      drop-shadow(0 0 3px rgba(34, 211, 238, 0.3));
+  }
+
+  /* Hover */
+  .grant-cursor-hover {
+    transform:
+      translate(-2px, -2px)
+      scale(1.15);
+  }
+
+  .grant-cursor-hover .grant-cursor-arrow {
+    border-left-color: #06b6d4;
+
+    filter:
+      drop-shadow(0 0 5px rgba(6, 182, 212, 0.6));
+  }
+
+  /* =====================================================
+     DARK MODE
+     ===================================================== */
+
+  .dark .grant-cursor-arrow {
+    border-left-color: #f8fafc;
+
+    filter:
+      drop-shadow(0 0 4px rgba(34, 211, 238, 0.45));
+  }
+
+  .dark .grant-cursor-hover .grant-cursor-arrow {
+    border-left-color: #22d3ee;
+
+    filter:
+      drop-shadow(0 0 6px rgba(34, 211, 238, 0.7));
+  }
 }
