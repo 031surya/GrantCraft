@@ -1,0 +1,54 @@
+{
+  "program_id": "P001",
+  "organization_name": "Community Water Access Network",
+  "program_name": "Rural Clean Water Initiative",
+  "program_description": "A community-based initiative that improves access to safe drinking water by rehabilitating local water points, supporting basic water-quality monitoring, and training community volunteers on water-system maintenance.",
+  "target_beneficiaries": {
+    "primary": "Rural households in communities with limited access to safe drinking water",
+    "population": "Households and community water committees"
+  },
+  "geographic_scope": [
+    "rural communities",
+    "underserved communities"
+  ],
+  "focus_areas": [
+    "clean water",
+    "public health",
+    "rural development",
+    "community infrastructure"
+  ],
+  "verified_impact": {
+    "communities_served": 12,
+    "households_reached": 1840,
+    "community_water_points_rehabilitated": 18,
+    "community_volunteers_trained": 36,
+    "reporting_period": "2025",
+    "verification_status": "documented_internal_program_report"
+  },
+  "implementation": {
+    "activities": [
+      "Assess community water access needs",
+      "Rehabilitate selected community water points",
+      "Conduct basic water-quality monitoring",
+      "Train community volunteers",
+      "Track maintenance and usage"
+    ],
+    "implementation_period_months": 12
+  },
+  "budget": {
+    "annual_program_budget": 72000,
+    "currency": "USD"
+  },
+  "evidence": [
+    {
+      "source": "Community Water Access Network 2025 Program Impact Report",
+      "supports": [
+        "communities_served",
+        "households_reached",
+        "community_water_points_rehabilitated",
+        "community_volunteers_trained"
+      ]
+    }
+  ],
+  "data_status": "synthetic_demo_data"
+}

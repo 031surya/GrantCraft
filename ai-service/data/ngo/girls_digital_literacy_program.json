@@ -1,0 +1,55 @@
+{
+  "program_id": "P002",
+  "organization_name": "Community Skills and Learning Initiative",
+  "program_name": "Girls Digital Literacy Program",
+  "program_description": "A community education program that provides girls from underserved communities with foundational computer skills, internet safety training, digital literacy education, and practical technology activities.",
+  "target_beneficiaries": {
+    "primary": "Girls aged 13 to 18 from underserved communities",
+    "population": "Secondary-school-age girls"
+  },
+  "geographic_scope": [
+    "underserved communities",
+    "rural communities",
+    "low-income communities"
+  ],
+  "focus_areas": [
+    "youth education",
+    "digital literacy",
+    "technology skills",
+    "digital inclusion"
+  ],
+  "verified_impact": {
+    "girls_enrolled": 420,
+    "girls_completed_training": 368,
+    "training_sessions_delivered": 96,
+    "community_learning_centers_supported": 6,
+    "reporting_period": "2025",
+    "verification_status": "documented_internal_program_report"
+  },
+  "implementation": {
+    "activities": [
+      "Conduct digital skills assessments",
+      "Provide foundational computer training",
+      "Teach internet safety and responsible technology use",
+      "Conduct practical digital literacy exercises",
+      "Track participant attendance and completion"
+    ],
+    "implementation_period_months": 10
+  },
+  "budget": {
+    "annual_program_budget": 58000,
+    "currency": "USD"
+  },
+  "evidence": [
+    {
+      "source": "Community Skills and Learning Initiative 2025 Program Impact Report",
+      "supports": [
+        "girls_enrolled",
+        "girls_completed_training",
+        "training_sessions_delivered",
+        "community_learning_centers_supported"
+      ]
+    }
+  ],
+  "data_status": "synthetic_demo_data"
+}

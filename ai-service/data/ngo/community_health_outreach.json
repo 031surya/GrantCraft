@@ -1,0 +1,55 @@
+{
+  "program_id": "P003",
+  "organization_name": "Community Health Access Network",
+  "program_name": "Community Health Outreach",
+  "program_description": "A community-based health program that provides preventive health education, basic screening activities, referral support, and health-awareness sessions for underserved communities.",
+  "target_beneficiaries": {
+    "primary": "Residents of underserved communities with limited access to preventive health information and services",
+    "population": "Adults, families, and community members"
+  },
+  "geographic_scope": [
+    "rural communities",
+    "underserved communities"
+  ],
+  "focus_areas": [
+    "community health",
+    "preventive care",
+    "health education",
+    "rural development"
+  ],
+  "verified_impact": {
+    "community_members_reached": 2750,
+    "health_education_sessions": 84,
+    "basic_screenings_completed": 1260,
+    "community_health_workers_trained": 28,
+    "reporting_period": "2025",
+    "verification_status": "documented_internal_program_report"
+  },
+  "implementation": {
+    "activities": [
+      "Identify priority community health needs",
+      "Conduct health education sessions",
+      "Provide basic health screening activities",
+      "Refer participants to appropriate health services",
+      "Train community health workers",
+      "Track participation and service referrals"
+    ],
+    "implementation_period_months": 12
+  },
+  "budget": {
+    "annual_program_budget": 85000,
+    "currency": "USD"
+  },
+  "evidence": [
+    {
+      "source": "Community Health Access Network 2025 Program Impact Report",
+      "supports": [
+        "community_members_reached",
+        "health_education_sessions",
+        "basic_screenings_completed",
+        "community_health_workers_trained"
+      ]
+    }
+  ],
+  "data_status": "synthetic_demo_data"
+}

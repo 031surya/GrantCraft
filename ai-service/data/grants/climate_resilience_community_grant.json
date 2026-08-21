@@ -1,0 +1,52 @@
+{
+  "grant_id": "G005",
+  "funder_name": "Climate Resilience Community Foundation",
+  "grant_title": "Local Climate Resilience Grant",
+  "description": "Supports community-led projects that help vulnerable communities prepare for climate-related risks, improve environmental resilience, and develop sustainable local solutions.",
+  "funding_amount": {
+    "min": 30000,
+    "max": 125000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "climate resilience",
+    "environmental sustainability",
+    "disaster preparedness",
+    "community resilience",
+    "sustainable development"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "community organization",
+      "environmental nonprofit"
+    ],
+    "geographic_scope": [
+      "climate-vulnerable communities",
+      "rural communities",
+      "underserved communities"
+    ],
+    "requirements": [
+      "identified climate-related community risk",
+      "community-centered implementation plan",
+      "measurable resilience outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1700,
+    "required_sections": [
+      "Organization Background",
+      "Climate Risk Assessment",
+      "Project Description",
+      "Community Benefits",
+      "Expected Resilience Outcomes",
+      "Implementation Plan",
+      "Sustainability Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2027-02-10",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

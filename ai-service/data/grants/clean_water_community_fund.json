@@ -1,0 +1,47 @@
+{
+  "grant_id": "G001",
+  "funder_name": "Clean Water Community Fund",
+  "grant_title": "Community Clean Water Initiative Grant",
+  "description": "Supports community-led projects that improve access to safe drinking water in underserved rural and semi-rural communities.",
+  "funding_amount": {
+    "min": 25000,
+    "max": 100000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "clean water",
+    "rural development",
+    "public health",
+    "community infrastructure"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "community organization"
+    ],
+    "geographic_scope": [
+      "rural communities",
+      "semi-rural communities"
+    ],
+    "requirements": [
+      "demonstrated community need",
+      "clear implementation plan",
+      "measurable project outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1500,
+    "required_sections": [
+      "Executive Summary",
+      "Community Need",
+      "Project Description",
+      "Expected Outcomes",
+      "Implementation Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2026-11-30",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

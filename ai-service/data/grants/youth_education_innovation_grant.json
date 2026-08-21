@@ -1,0 +1,51 @@
+{
+  "grant_id": "G003",
+  "funder_name": "Youth Education Innovation Foundation",
+  "grant_title": "Digital Learning and Youth Innovation Grant",
+  "description": "Supports nonprofit programs that improve educational access, digital literacy, technology skills, and innovative learning opportunities for young people.",
+  "funding_amount": {
+    "min": 20000,
+    "max": 120000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "youth education",
+    "digital literacy",
+    "technology skills",
+    "innovative learning"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "educational nonprofit",
+      "community organization"
+    ],
+    "geographic_scope": [
+      "underserved communities",
+      "rural communities",
+      "low-income communities"
+    ],
+    "requirements": [
+      "clearly defined target youth population",
+      "educational program plan",
+      "measurable learning outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1600,
+    "required_sections": [
+      "Organization Background",
+      "Education Challenge",
+      "Program Description",
+      "Target Beneficiaries",
+      "Expected Learning Outcomes",
+      "Implementation Plan",
+      "Evaluation Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2027-01-20",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

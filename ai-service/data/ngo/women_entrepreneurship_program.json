@@ -1,0 +1,56 @@
+{
+  "program_id": "P004",
+  "organization_name": "Women Forward Community Initiative",
+  "program_name": "Women Entrepreneurship Program",
+  "program_description": "A community-based economic empowerment program that provides women with entrepreneurship training, basic financial literacy, business planning support, and peer mentoring to strengthen small-scale livelihood opportunities.",
+  "target_beneficiaries": {
+    "primary": "Women from rural and underserved communities interested in starting or strengthening small businesses",
+    "population": "Women entrepreneurs and aspiring entrepreneurs"
+  },
+  "geographic_scope": [
+    "rural communities",
+    "underserved communities",
+    "low-income communities"
+  ],
+  "focus_areas": [
+    "women empowerment",
+    "entrepreneurship",
+    "financial literacy",
+    "economic development",
+    "community leadership"
+  ],
+  "verified_impact": {
+    "women_enrolled": 310,
+    "women_completed_training": 274,
+    "business_plans_completed": 198,
+    "peer_mentoring_sessions": 62,
+    "reporting_period": "2025",
+    "verification_status": "documented_internal_program_report"
+  },
+  "implementation": {
+    "activities": [
+      "Identify women interested in entrepreneurship",
+      "Deliver entrepreneurship and financial literacy training",
+      "Support participants in developing business plans",
+      "Provide peer mentoring sessions",
+      "Track participant completion and business-planning outcomes"
+    ],
+    "implementation_period_months": 9
+  },
+  "budget": {
+    "annual_program_budget": 64000,
+    "currency": "USD"
+  },
+  "evidence": [
+    {
+      "source": "Women Forward Community Initiative 2025 Program Impact Report",
+      "supports": [
+        "women_enrolled",
+        "women_completed_training",
+        "business_plans_completed",
+        "peer_mentoring_sessions"
+      ]
+    }
+  ],
+  "data_status": "synthetic_demo_data"
+}

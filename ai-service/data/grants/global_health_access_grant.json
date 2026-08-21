@@ -1,0 +1,48 @@
+{
+  "grant_id": "G002",
+  "funder_name": "Global Health Access Foundation",
+  "grant_title": "Rural Community Health Access Grant",
+  "description": "Supports nonprofit initiatives that improve access to essential health services, preventive care, and health education in underserved communities.",
+  "funding_amount": {
+    "min": 30000,
+    "max": 150000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "community health",
+    "preventive care",
+    "health education",
+    "rural development"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "community health organization"
+    ],
+    "geographic_scope": [
+      "rural communities",
+      "underserved communities"
+    ],
+    "requirements": [
+      "documented community health need",
+      "qualified implementation team",
+      "measurable health outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1800,
+    "required_sections": [
+      "Organization Background",
+      "Community Health Need",
+      "Program Description",
+      "Expected Health Outcomes",
+      "Implementation Plan",
+      "Evaluation Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2026-12-15",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

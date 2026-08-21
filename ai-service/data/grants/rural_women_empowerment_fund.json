@@ -1,0 +1,52 @@
+{
+  "grant_id": "G004",
+  "funder_name": "Rural Women Empowerment Fund",
+  "grant_title": "Women-Led Community Enterprise Grant",
+  "description": "Supports nonprofit programs that strengthen the economic participation, entrepreneurship, financial skills, and leadership opportunities of women in underserved communities.",
+  "funding_amount": {
+    "min": 25000,
+    "max": 100000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "women empowerment",
+    "entrepreneurship",
+    "financial literacy",
+    "economic development",
+    "community leadership"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "community organization",
+      "women-focused nonprofit"
+    ],
+    "geographic_scope": [
+      "rural communities",
+      "underserved communities",
+      "low-income communities"
+    ],
+    "requirements": [
+      "defined women beneficiary population",
+      "clear economic empowerment strategy",
+      "measurable participant outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1400,
+    "required_sections": [
+      "Organization Background",
+      "Community Context",
+      "Women Empowerment Program",
+      "Target Beneficiaries",
+      "Expected Outcomes",
+      "Implementation Plan",
+      "Sustainability Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2026-12-05",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

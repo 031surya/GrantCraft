@@ -1,0 +1,52 @@
+{
+  "grant_id": "G006",
+  "funder_name": "Digital Inclusion Initiative",
+  "grant_title": "Community Digital Access and Skills Grant",
+  "description": "Supports nonprofit programs that expand digital access, improve technology skills, and help underserved communities participate more effectively in the digital economy.",
+  "funding_amount": {
+    "min": 20000,
+    "max": 100000,
+    "currency": "USD"
+  },
+  "focus_areas": [
+    "digital inclusion",
+    "digital literacy",
+    "technology access",
+    "workforce development",
+    "digital skills"
+  ],
+  "eligibility": {
+    "organization_types": [
+      "registered nonprofit",
+      "community organization",
+      "educational nonprofit"
+    ],
+    "geographic_scope": [
+      "underserved communities",
+      "rural communities",
+      "low-income communities"
+    ],
+    "requirements": [
+      "identified digital access gap",
+      "clear training or access strategy",
+      "measurable digital skills outcomes"
+    ]
+  },
+  "application_requirements": {
+    "proposal_format": "Narrative proposal",
+    "maximum_word_count": 1500,
+    "required_sections": [
+      "Organization Background",
+      "Digital Access Challenge",
+      "Program Description",
+      "Target Beneficiaries",
+      "Expected Outcomes",
+      "Implementation Plan",
+      "Evaluation Plan",
+      "Budget Summary"
+    ]
+  },
+  "deadline": "2027-01-05",
+  "source_type": "sample_grant_dataset",
+  "data_status": "synthetic_demo_data"
+}

@@ -20,3 +20,9 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Chroma vector database
+ai-service/vector_db/
+
+# Generated vector database
+ai-service/vector_db/
