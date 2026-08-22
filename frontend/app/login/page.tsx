@@ -1,11 +1,88 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
 
 export default function LoginPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  // =====================================================
+  // FORM STATE
+  // =====================================================
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // =====================================================
+  // LOGIN
+  // =====================================================
+
+  const handleLogin = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    setError("");
+    setSuccess("");
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        "http://localhost:5000/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(
+          data.message || "Unable to sign in"
+        );
+        return;
+      }
+
+      // Store authentication token
+      localStorage.setItem(
+        "grantcraft_token",
+        data.token
+      );
+
+      // Store basic user information
+      localStorage.setItem(
+        "grantcraft_user",
+        JSON.stringify(data.user)
+      );
+
+      setSuccess("Login successful. Redirecting...");
+
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 800);
+    } catch (error) {
+      console.error("Login error:", error);
+
+      setError(
+        "Unable to connect to GrantCraft server. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main
@@ -190,7 +267,10 @@ export default function LoginPage() {
             }`}
           >
 
-            <form className="space-y-6">
+            <form
+              onSubmit={handleLogin}
+              className="space-y-6"
+            >
 
 
               {/* =================================================
@@ -213,7 +293,12 @@ export default function LoginPage() {
                 <input
                   id="email"
                   type="email"
+                  value={email}
+                  onChange={(event) =>
+                    setEmail(event.target.value)
+                  }
                   placeholder="you@example.com"
+                  required
                   className={`w-full rounded-xl border px-4 py-3.5 text-sm outline-none transition duration-300 ${
                     darkMode
                       ? "border-white/10 bg-slate-900/70 text-white placeholder:text-slate-600 hover:border-white/20 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
@@ -256,8 +341,17 @@ export default function LoginPage() {
 
                   <input
                     id="password"
-                    type={showPassword ? "text" : "password"}
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
+                    value={password}
+                    onChange={(event) =>
+                      setPassword(event.target.value)
+                    }
                     placeholder="Enter your password"
+                    required
                     className={`w-full rounded-xl border px-4 py-3.5 pr-12 text-sm outline-none transition duration-300 ${
                       darkMode
                         ? "border-white/10 bg-slate-900/70 text-white placeholder:text-slate-600 hover:border-white/20 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
@@ -267,14 +361,18 @@ export default function LoginPage() {
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() =>
+                      setShowPassword(!showPassword)
+                    }
                     className={`absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-xs font-semibold transition ${
                       darkMode
                         ? "text-slate-500 hover:text-cyan-400"
                         : "text-slate-400 hover:text-cyan-500"
                     }`}
                   >
-                    {showPassword ? "Hide" : "Show"}
+                    {showPassword
+                      ? "Hide"
+                      : "Show"}
                   </button>
 
                 </div>
@@ -309,18 +407,42 @@ export default function LoginPage() {
 
 
               {/* =================================================
+                  ERROR / SUCCESS
+                  ================================================= */}
+
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm font-medium text-cyan-600 dark:border-cyan-500/20 dark:bg-cyan-500/10 dark:text-cyan-400">
+                  {success}
+                </div>
+              )}
+
+
+              {/* =================================================
                   SIGN IN BUTTON
                   ================================================= */}
 
               <button
                 type="submit"
+                disabled={loading}
                 className={`w-full rounded-xl px-5 py-3.5 text-sm font-bold shadow-lg transition duration-300 hover:-translate-y-0.5 ${
                   darkMode
                     ? "bg-white text-slate-950 shadow-black/20 hover:bg-cyan-400 hover:shadow-cyan-500/20"
                     : "bg-slate-950 text-white shadow-slate-900/10 hover:bg-cyan-500 hover:shadow-cyan-500/20"
+                } ${
+                  loading
+                    ? "cursor-not-allowed opacity-70"
+                    : ""
                 }`}
               >
-                Sign In →
+                {loading
+                  ? "Signing In..."
+                  : "Sign In →"}
               </button>
 
             </form>
@@ -382,6 +504,7 @@ export default function LoginPage() {
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
+
                 <path
                   fill="#4285F4"
                   d="M21.35 12.23c0-.78-.07-1.53-.2-2.25H12v4.26h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.4z"
@@ -401,6 +524,7 @@ export default function LoginPage() {
                   fill="#EA4335"
                   d="M12 6.13c1.43 0 2.72.49 3.73 1.45l2.8-2.8C16.83 3.18 14.63 2.25 12 2.25a9.74 9.74 0 0 0-8.71 5.38l3.25 2.53C7.31 7.85 9.46 6.13 12 6.13z"
                 />
+
               </svg>
 
               Continue with Google

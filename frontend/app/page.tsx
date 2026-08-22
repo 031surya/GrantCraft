@@ -863,551 +863,515 @@ export default function Home() {
             </p>
           </div>
 
-          {/* -------------------------------------------------
-              TEAM CARDS
-
-              FINAL ORDER:
-              01 Bangaram
-              02 Lavanya
-              03 Surya
-              04 Srijai
-              ------------------------------------------------- */}
-
           <div className="mx-auto mt-16 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
             {/* =================================================
-                VENNAPU BANGARAM
-                ================================================= */}
+    SRIJAI GUBBALA
+    ================================================= */}
+
+<div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-blue-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-blue-400/20 dark:bg-white/[0.03]">
+
+  <div className="team-profile-main flex h-full flex-col items-center p-7">
+
+    <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+      Team Member
+    </span>
+
+    <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-blue-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(59,130,246,0.15)] dark:border-blue-400/30 dark:bg-slate-900">
+      <img
+        src="/srijai1.jpeg"
+        alt="Srijai Gubbala"
+        className="h-full w-full rounded-full object-cover"
+      />
+    </div>
+
+    <h3 className="mt-6 text-center text-xl font-bold">
+      Srijai Gubbala
+    </h3>
+
+    <p className="mt-2 text-center text-xs font-semibold leading-5 text-blue-500">
+      Python Developer · RAG Engineer · AI Integration
+    </p>
+
+    <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
+      23221A6118
+    </div>
+
+    <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-blue-500">
+      View profile details →
+    </div>
+  </div>
+
+  <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
+
+    <div className="flex items-center justify-between">
+      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-500">
+        Team Member
+      </span>
+
+      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-300/50 text-blue-500">
+        ↗
+      </span>
+    </div>
+
+    <h3 className="mt-7 text-2xl font-black">
+      Srijai Gubbala
+    </h3>
+
+    <p className="mt-2 text-xs font-semibold leading-5 text-blue-500">
+      Python Developer · AI Integration
+    </p>
+
+    <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
+      Contributes to Python development, and AI integration
+      across the GrantCraft pipeline.
+    </p>
+
+    <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Project
+        </span>
+
+        <span className="font-semibold">
+          GrantCraft
+        </span>
+      </div>
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Status
+        </span>
+
+        <span className="font-semibold text-emerald-500">
+          Active
+        </span>
+      </div>
+
+    </div>
 
-            <div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-2xl hover:shadow-cyan-500/10 dark:border-white/10 dark:bg-white/[0.03]">
+    <div className="mt-auto">
+
+      <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-blue-500">
+        Contact Details
+      </div>
+
+      <a
+        href="mailto:srijaipersonal0001@gmail.com"
+        className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-blue-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span className="truncate">
+          srijaipersonal0001@gmail.com
+        </span>
+
+        <span className="ml-2 text-blue-500">
+          ↗
+        </span>
+      </a>
 
-              {/* Normal Profile */}
+      <a
+        href="https://www.linkedin.com/in/srijai-gubbala-41320a350/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-blue-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span>
+          LinkedIn
+        </span>
 
-              <div className="team-profile-main flex h-full flex-col items-center p-7">
+        <span className="text-blue-500">
+          ↗
+        </span>
+      </a>
 
-                <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Team Member
-                </span>
+    </div>
+  </div>
+</div>
 
-                {/* Profile Image */}
 
-                <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(34,211,238,0.15)] dark:border-cyan-400/30 dark:bg-slate-900">
-                  <img
-                    src="/23221a6155.jpeg"
-                    alt="Vennapu Bangaram"
-                    className="h-full w-full rounded-full object-cover"
-                  />
-                </div>
-
-                {/* Name */}
-
-                <h3 className="mt-6 text-center text-xl font-bold">
-                  Vennapu Bangaram
-                </h3>
-
-                {/* Role */}
-
-                <p className="mt-2 text-center text-xs font-semibold text-cyan-500">
-                  Tester · Quality Assurance
-                </p>
-
-                {/* Roll Number */}
-
-                <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
-                  23221A6155
-                </div>
-
-                {/* Hover Hint */}
-
-                <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-cyan-500">
-                  View profile details →
-                </div>
-              </div>
-
-              {/* Hover Information */}
-
-              <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
+{/* =================================================
+    SURYA BANDARU
+    ================================================= */}
 
-                <div className="flex items-center justify-between">
-
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
-                    Team Member
-                  </span>
-
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 text-cyan-500">
-                    ↗
-                  </span>
-                </div>
-
-                <h3 className="mt-7 text-2xl font-black">
-                  Vennapu Bangaram
-                </h3>
+<div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-violet-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-500/10 dark:border-violet-400/20 dark:bg-white/[0.03]">
+
+  <div className="team-profile-main flex h-full flex-col items-center p-7">
+
+    <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+      Team Member
+    </span>
+
+    <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-violet-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(139,92,246,0.15)] dark:border-violet-400/30 dark:bg-slate-900">
+      <img
+        src="/surya1.jpg"
+        alt="Surya Bandaru"
+        className="h-full w-full rounded-full object-cover"
+      />
+    </div>
+
+    <h3 className="mt-6 text-center text-xl font-bold">
+      Surya Bandaru
+    </h3>
+
+    <p className="mt-2 text-center text-xs font-semibold text-violet-500">
+      MERN Stack Developer
+    </p>
+
+    <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
+      24225A6101
+    </div>
+
+    <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-violet-500">
+      View profile details →
+    </div>
+
+  </div>
+
+  <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
+
+    <div className="flex items-center justify-between">
+
+      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-violet-500">
+        Team Member
+      </span>
+
+      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-violet-300/50 text-violet-500">
+        ↗
+      </span>
+
+    </div>
+
+    <h3 className="mt-7 text-2xl font-black">
+      Surya Bandaru
+    </h3>
+
+    <p className="mt-2 text-xs font-semibold text-violet-500">
+      MERN Stack Developer
+    </p>
+
+    <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
+      Responsible for the GrantCraft frontend experience and
+      full-stack application development.
+    </p>
+
+    <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Project
+        </span>
 
-                <p className="mt-2 text-xs font-semibold text-cyan-500">
-                  Tester · Quality Assurance
-                </p>
+        <span className="font-semibold">
+          GrantCraft
+        </span>
+      </div>
 
-                <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  Focused on testing GrantCraft workflows and helping ensure
-                  a reliable user experience.
-                </p>
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Status
+        </span>
 
-                <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
+        <span className="font-semibold text-emerald-500">
+          Active
+        </span>
+      </div>
 
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Project
-                    </span>
-                    <span className="font-semibold">
-                      GrantCraft
-                    </span>
-                  </div>
+    </div>
 
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Status
-                    </span>
-                    <span className="font-semibold text-emerald-500">
-                      Active
-                    </span>
-                  </div>
+    <div className="mt-auto">
 
-                </div>
+      <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-violet-500">
+        Contact Details
+      </div>
 
-                <div className="mt-auto">
+      <a
+        href="mailto:surya.bandaru05@gmail.com"
+        className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-violet-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span className="truncate">
+          surya.bandaru05@gmail.com
+        </span>
 
-                  <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
-                    Contact Details
-                  </div>
-
-                  <a
-                    href="mailto:bngmvennapu@gmail.com"
-                    className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span className="truncate">
-                      bngmvennapu@gmail.com
-                    </span>
-                    <span className="ml-2 text-cyan-500">
-                      ↗
-                    </span>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/vennapu-bangaram-5a2911292/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span>
-                      LinkedIn
-                    </span>
-                    <span className="text-cyan-500">
-                      ↗
-                    </span>
-                  </a>
-
-                </div>
-              </div>
-            </div>
-
-            {/* =================================================
-                LAVANYA SAPARAPU
-                ================================================= */}
-
-            <div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-cyan-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-2xl hover:shadow-cyan-500/10 dark:border-cyan-400/20 dark:bg-white/[0.03]">
-
-              {/* Normal Profile */}
-
-              <div className="team-profile-main flex h-full flex-col items-center p-7">
-
-                <span className="self-end rounded-full border border-cyan-300/50 bg-cyan-50 px-3 py-1 text-[8px] font-black uppercase tracking-[0.15em] text-cyan-600 dark:border-cyan-400/20 dark:bg-cyan-400/5 dark:text-cyan-300">
-                  Team Lead
-                </span>
-
-                {/* Profile Image */}
-
-                <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-300 bg-slate-100 p-1 shadow-[0_0_40px_rgba(34,211,238,0.2)] dark:border-cyan-400/30 dark:bg-slate-900">
-                  <img
-                    src="/lavanya1.png"
-                    alt="Lavanya Saparapu"
-                    className="h-full w-full rounded-full object-cover"
-                  />
-                </div>
-
-                {/* Name */}
-
-                <h3 className="mt-6 text-center text-xl font-bold">
-                  Lavanya Saparapu
-                </h3>
-
-                {/* Role */}
-
-                <p className="mt-2 text-center text-xs font-semibold leading-5 text-cyan-500">
-                  Python Specialist · RAG Engineer
-                </p>
-
-                {/* Roll Number */}
-
-                <div className="mt-5 rounded-xl border border-cyan-100 bg-cyan-50/50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-cyan-600 dark:border-cyan-400/10 dark:bg-cyan-400/5 dark:text-cyan-300">
-                  23221A6145
-                </div>
-
-                <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-cyan-500">
-                  View profile details →
-                </div>
-              </div>
-
-              {/* Hover Information */}
-
-              <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
-
-                <div className="flex items-center justify-between">
-
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
-                    Team Lead
-                  </span>
-
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 text-cyan-500">
-                    ↗
-                  </span>
-                </div>
-
-                <h3 className="mt-7 text-2xl font-black">
-                  Lavanya Saparapu
-                </h3>
-
-                <p className="mt-2 text-xs font-semibold text-cyan-500">
-                  Python Specialist · RAG Engineer
-                </p>
-
-                <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  Leads the AI development direction with strong Python
-                  expertise and responsibility across the RAG pipeline.
-                </p>
-
-                <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Project
-                    </span>
-                    <span className="font-semibold">
-                      GrantCraft
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Status
-                    </span>
-                    <span className="font-semibold text-emerald-500">
-                      Active
-                    </span>
-                  </div>
-
-                </div>
-
-                <div className="mt-auto">
-
-                  <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
-                    Contact Details
-                  </div>
-
-                  <a
-                    href="mailto:saparapulavanya813@gmail.com"
-                    className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span className="truncate">
-                      saparapulavanya813@gmail.com
-                    </span>
-                    <span className="ml-2 text-cyan-500">
-                      ↗
-                    </span>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/saparapu-lavanya-2843182aa/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span>
-                      LinkedIn
-                    </span>
-                    <span className="text-cyan-500">
-                      ↗
-                    </span>
-                  </a>
-
-                </div>
-              </div>
-            </div>
-
-            {/* =================================================
-                SURYA BANDARU
-                ================================================= */}
-
-            <div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-violet-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-500/10 dark:border-violet-400/20 dark:bg-white/[0.03]">
-
-              {/* Normal Profile */}
-
-              <div className="team-profile-main flex h-full flex-col items-center p-7">
-
-                <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Team Member
-                </span>
-
-                {/* Profile Image */}
-
-                <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-violet-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(139,92,246,0.15)] dark:border-violet-400/30 dark:bg-slate-900">
-                  <img
-                    src="/surya1.jpg"
-                    alt="Surya Bandaru"
-                    className="h-full w-full rounded-full object-cover"
-                  />
-                </div>
-
-                {/* Name */}
-
-                <h3 className="mt-6 text-center text-xl font-bold">
-                  Surya Bandaru
-                </h3>
-
-                {/* Role */}
-
-                <p className="mt-2 text-center text-xs font-semibold text-violet-500">
-                  MERN Stack Developer
-                </p>
-
-                {/* Roll Number */}
-
-                <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
-                  24225A6101
-                </div>
-
-                <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-violet-500">
-                  View profile details →
-                </div>
-              </div>
-
-              {/* Hover Information */}
-
-              <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
-
-                <div className="flex items-center justify-between">
-
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-violet-500">
-                    Team Member
-                  </span>
-
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-violet-300/50 text-violet-500">
-                    ↗
-                  </span>
-                </div>
-
-                <h3 className="mt-7 text-2xl font-black">
-                  Surya Bandaru
-                </h3>
-
-                <p className="mt-2 text-xs font-semibold text-violet-500">
-                  MERN Stack Developer
-                </p>
-
-                <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  Responsible for the GrantCraft frontend experience and
-                  full-stack application development.
-                </p>
-
-                <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Project
-                    </span>
-                    <span className="font-semibold">
-                      GrantCraft
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Status
-                    </span>
-                    <span className="font-semibold text-emerald-500">
-                      Active
-                    </span>
-                  </div>
-
-                </div>
-
-                <div className="mt-auto">
-
-                  <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-violet-500">
-                    Contact Details
-                  </div>
-
-                  <a
-                    href="mailto:surya.bandaru05@gmail.com"
-                    className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-violet-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span className="truncate">
-                      surya.bandaru05@gmail.com
-                    </span>
-                    <span className="ml-2 text-violet-500">
-                      ↗
-                    </span>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/suryabandaru05/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-violet-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span>
-                      LinkedIn
-                    </span>
-                    <span className="text-violet-500">
-                      ↗
-                    </span>
-                  </a>
-
-                </div>
-              </div>
-            </div>
-
-            {/* =================================================
-                SRIJAI GUBBALA
-                ================================================= */}
-
-            <div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-blue-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-blue-400/20 dark:bg-white/[0.03]">
-
-              {/* Normal Profile */}
-
-              <div className="team-profile-main flex h-full flex-col items-center p-7">
-
-                <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Team Member
-                </span>
-
-                {/* Profile Image */}
-
-                <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-blue-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(59,130,246,0.15)] dark:border-blue-400/30 dark:bg-slate-900">
-                  <img
-                    src="/srijai1.jpeg"
-                    alt="Srijai Gubbala"
-                    className="h-full w-full rounded-full object-cover"
-                  />
-                </div>
-
-                {/* Name */}
-
-                <h3 className="mt-6 text-center text-xl font-bold">
-                  Srijai Gubbala
-                </h3>
-
-                {/* Role */}
-
-                <p className="mt-2 text-center text-xs font-semibold leading-5 text-blue-500">
-                  Python Developer · RAG Engineer · AI Integration
-                </p>
-
-                {/* Roll Number */}
-
-                <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
-                  23221A6118
-                </div>
-
-                <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-blue-500">
-                  View profile details →
-                </div>
-              </div>
-
-              {/* Hover Information */}
-
-              <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
-
-                <div className="flex items-center justify-between">
-
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-500">
-                    Team Member
-                  </span>
-
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-300/50 text-blue-500">
-                    ↗
-                  </span>
-                </div>
-
-                <h3 className="mt-7 text-2xl font-black">
-                  Srijai Gubbala
-                </h3>
-
-                <p className="mt-2 text-xs font-semibold leading-5 text-blue-500">
-                  Python Developer ·  AI Integration
-                </p>
-
-                <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  Contributes to Python development, and
-                  AI integration across the GrantCraft pipeline.
-                </p>
-
-                <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Project
-                    </span>
-                    <span className="font-semibold">
-                      GrantCraft
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between text-[10px]">
-                    <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
-                      Status
-                    </span>
-                    <span className="font-semibold text-emerald-500">
-                      Active
-                    </span>
-                  </div>
-
-                </div>
-
-                <div className="mt-auto">
-
-                  <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-blue-500">
-                    Contact Details
-                  </div>
-
-                  <a
-                    href="mailto:srijaipersonal0001@gmail.com"
-                    className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-blue-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span className="truncate">
-                      srijaipersonal0001@gmail.com
-                    </span>
-                    <span className="ml-2 text-blue-500">
-                      ↗
-                    </span>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/srijai-gubbala-41320a350/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-blue-300 dark:border-white/10 dark:bg-white/[0.03]"
-                  >
-                    <span>
-                      LinkedIn
-                    </span>
-                    <span className="text-blue-500">
-                      ↗
-                    </span>
-                  </a>
-
-                </div>
-              </div>
-            </div>
+        <span className="ml-2 text-violet-500">
+          ↗
+        </span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/suryabandaru05/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-violet-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span>
+          LinkedIn
+        </span>
+
+        <span className="text-violet-500">
+          ↗
+        </span>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+{/* =================================================
+    LAVANYA SAPARAPU
+    ================================================= */}
+
+<div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-cyan-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-2xl hover:shadow-cyan-500/10 dark:border-cyan-400/20 dark:bg-white/[0.03]">
+
+  <div className="team-profile-main flex h-full flex-col items-center p-7">
+
+    <span className="self-end rounded-full border border-cyan-300/50 bg-cyan-50 px-3 py-1 text-[8px] font-black uppercase tracking-[0.15em] text-cyan-600 dark:border-cyan-400/20 dark:bg-cyan-400/5 dark:text-cyan-300">
+      Team Lead
+    </span>
+
+    <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-300 bg-slate-100 p-1 shadow-[0_0_40px_rgba(34,211,238,0.2)] dark:border-cyan-400/30 dark:bg-slate-900">
+      <img
+        src="/lavanya1.png"
+        alt="Lavanya Saparapu"
+        className="h-full w-full rounded-full object-cover"
+      />
+    </div>
+
+    <h3 className="mt-6 text-center text-xl font-bold">
+      Lavanya Saparapu
+    </h3>
+
+    <p className="mt-2 text-center text-xs font-semibold leading-5 text-cyan-500">
+      Python Specialist · RAG Engineer
+    </p>
+
+    <div className="mt-5 rounded-xl border border-cyan-100 bg-cyan-50/50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-cyan-600 dark:border-cyan-400/10 dark:bg-cyan-400/5 dark:text-cyan-300">
+      23221A6145
+    </div>
+
+    <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-cyan-500">
+      View profile details →
+    </div>
+
+  </div>
+
+  <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
+
+    <div className="flex items-center justify-between">
+
+      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
+        Team Lead
+      </span>
+
+      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 text-cyan-500">
+        ↗
+      </span>
+
+    </div>
+
+    <h3 className="mt-7 text-2xl font-black">
+      Lavanya Saparapu
+    </h3>
+
+    <p className="mt-2 text-xs font-semibold text-cyan-500">
+      Python Specialist · RAG Engineer
+    </p>
+
+    <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
+      Leads the AI development direction with strong Python
+      expertise and responsibility across the RAG pipeline.
+    </p>
+
+    <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Project
+        </span>
+
+        <span className="font-semibold">
+          GrantCraft
+        </span>
+      </div>
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Status
+        </span>
+
+        <span className="font-semibold text-emerald-500">
+          Active
+        </span>
+      </div>
+
+    </div>
+
+    <div className="mt-auto">
+
+      <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
+        Contact Details
+      </div>
+
+      <a
+        href="mailto:saparapulavanya813@gmail.com"
+        className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span className="truncate">
+          saparapulavanya813@gmail.com
+        </span>
+
+        <span className="ml-2 text-cyan-500">
+          ↗
+        </span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/saparapu-lavanya-2843182aa/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span>
+          LinkedIn
+        </span>
+
+        <span className="text-cyan-500">
+          ↗
+        </span>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+{/* =================================================
+    VENNAPU BANGARAM
+    ================================================= */}
+
+<div className="team-profile-card group relative min-h-[430px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300 hover:shadow-2xl hover:shadow-cyan-500/10 dark:border-white/10 dark:bg-white/[0.03]">
+
+  <div className="team-profile-main flex h-full flex-col items-center p-7">
+
+    <span className="self-end text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+      Team Member
+    </span>
+
+    <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-300 bg-slate-100 p-1 shadow-[0_0_35px_rgba(34,211,238,0.15)] dark:border-cyan-400/30 dark:bg-slate-900">
+      <img
+        src="/23221a6155.jpeg"
+        alt="Vennapu Bangaram"
+        className="h-full w-full rounded-full object-cover"
+      />
+    </div>
+
+    <h3 className="mt-6 text-center text-xl font-bold">
+      Vennapu Bangaram
+    </h3>
+
+    <p className="mt-2 text-center text-xs font-semibold text-cyan-500">
+      Tester · Quality Assurance
+    </p>
+
+    <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold tracking-[0.12em] text-slate-400 dark:border-white/5 dark:bg-white/[0.03]">
+      23221A6155
+    </div>
+
+    <div className="mt-auto pt-8 text-[10px] font-medium text-slate-400 transition-colors group-hover:text-cyan-500">
+      View profile details →
+    </div>
+
+  </div>
+
+  <div className="team-profile-info absolute inset-0 flex flex-col bg-white/95 p-7 backdrop-blur-xl dark:bg-slate-950/95">
+
+    <div className="flex items-center justify-between">
+
+      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
+        Team Member
+      </span>
+
+      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 text-cyan-500">
+        ↗
+      </span>
+
+    </div>
+
+    <h3 className="mt-7 text-2xl font-black">
+      Vennapu Bangaram
+    </h3>
+
+    <p className="mt-2 text-xs font-semibold text-cyan-500">
+      Tester · Quality Assurance
+    </p>
+
+    <p className="mt-4 text-sm leading-6 text-slate-500 dark:text-slate-400">
+      Focused on testing GrantCraft workflows and helping ensure
+      a reliable user experience.
+    </p>
+
+    <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 dark:border-white/10">
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Project
+        </span>
+
+        <span className="font-semibold">
+          GrantCraft
+        </span>
+      </div>
+
+      <div className="flex justify-between text-[10px]">
+        <span className="font-bold uppercase tracking-[0.15em] text-slate-400">
+          Status
+        </span>
+
+        <span className="font-semibold text-emerald-500">
+          Active
+        </span>
+      </div>
+
+    </div>
+
+    <div className="mt-auto">
+
+      <div className="mb-3 text-[9px] font-black uppercase tracking-[0.2em] text-cyan-500">
+        Contact Details
+      </div>
+
+      <a
+        href="mailto:bngmvennapu@gmail.com"
+        className="mb-2 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span className="truncate">
+          bngmvennapu@gmail.com
+        </span>
+
+        <span className="ml-2 text-cyan-500">
+          ↗
+        </span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/vennapu-bangaram-5a2911292/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs transition hover:border-cyan-300 dark:border-white/10 dark:bg-white/[0.03]"
+      >
+        <span>
+          LinkedIn
+        </span>
+
+        <span className="text-cyan-500">
+          ↗
+        </span>
+      </a>
+
+    </div>
+  </div>
+</div>
 
           </div>
 

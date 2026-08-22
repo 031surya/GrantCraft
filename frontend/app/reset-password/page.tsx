@@ -1,19 +1,42 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import CustomCursor from "../components/CustomCursor";
 
-export default function ForgotPasswordPage() {
+export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+
   const [darkMode, setDarkMode] = useState(false);
+  const [token, setToken] = useState("");
+
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
 
   // =====================================================
-  // FORGOT PASSWORD
+  // GET TOKEN FROM URL
+  // =====================================================
+
+  useEffect(() => {
+    const urlToken = searchParams.get("token");
+
+    if (urlToken) {
+      setToken(urlToken);
+    } else {
+      setError(
+        "Reset token is missing. Please request a new password reset link."
+      );
+    }
+  }, [searchParams]);
+
+  // =====================================================
+  // RESET PASSWORD
   // =====================================================
 
   const handleSubmit = async (
@@ -21,15 +44,37 @@ export default function ForgotPasswordPage() {
   ) => {
     event.preventDefault();
 
-    if (!email.trim()) return;
+    setError("");
+
+    if (!email.trim()) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    if (!token) {
+      setError(
+        "Reset token is missing. Please request a new reset link."
+      );
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setError(
+        "Password must be at least 8 characters long."
+      );
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
     setLoading(true);
-    setError("");
-    setMessage("");
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/forgot-password",
+        "http://localhost:5000/api/auth/reset-password",
         {
           method: "POST",
           headers: {
@@ -37,6 +82,8 @@ export default function ForgotPasswordPage() {
           },
           body: JSON.stringify({
             email: email.trim(),
+            resetToken: token,
+            newPassword,
           }),
         }
       );
@@ -46,16 +93,14 @@ export default function ForgotPasswordPage() {
       if (!response.ok || !data.success) {
         setError(
           data.message ||
-            "Something went wrong. Please try again."
+            "Unable to reset your password."
         );
         return;
       }
 
-      setMessage(data.message);
-      setSubmitted(true);
-
+      setSuccess(true);
     } catch (error) {
-      console.error("Forgot password error:", error);
+      console.error("Reset password error:", error);
 
       setError(
         "Unable to connect to GrantCraft. Please try again."
@@ -73,21 +118,13 @@ export default function ForgotPasswordPage() {
           : "bg-slate-50 text-slate-950"
       }`}
     >
-
-      {/* =====================================================
-          CUSTOM CURSOR
-          ===================================================== */}
-
       <CustomCursor />
 
-
       {/* =====================================================
-          BACKGROUND EFFECTS
+          BACKGROUND
           ===================================================== */}
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
-        {/* Cyan Glow */}
 
         <div
           className={`absolute -left-40 -top-40 h-96 w-96 rounded-full blur-3xl ${
@@ -97,8 +134,6 @@ export default function ForgotPasswordPage() {
           }`}
         />
 
-        {/* Violet Glow */}
-
         <div
           className={`absolute -bottom-40 -right-40 h-96 w-96 rounded-full blur-3xl ${
             darkMode
@@ -106,8 +141,6 @@ export default function ForgotPasswordPage() {
               : "bg-violet-300/20"
           }`}
         />
-
-        {/* Center Glow */}
 
         <div
           className={`absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl ${
@@ -125,8 +158,6 @@ export default function ForgotPasswordPage() {
           ===================================================== */}
 
       <nav className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
-
-        {/* Logo */}
 
         <a href="/" className="flex items-center gap-3">
 
@@ -156,10 +187,6 @@ export default function ForgotPasswordPage() {
 
         </a>
 
-
-        {/* =================================================
-            THEME + LOGIN
-            ================================================= */}
 
         <div className="flex items-center gap-3">
 
@@ -192,26 +219,23 @@ export default function ForgotPasswordPage() {
 
 
       {/* =====================================================
-          FORGOT PASSWORD CONTENT
+          CONTENT
           ===================================================== */}
 
       <div className="relative z-10 flex min-h-[calc(100vh-96px)] items-center justify-center px-6 py-12">
 
         <div className="w-full max-w-md">
 
-
-          {/* =================================================
-              HEADING
-              ================================================= */}
+          {/* Heading */}
 
           <div className="mb-6 text-center">
 
             <div className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-500">
-              Account Recovery
+              Password Recovery
             </div>
 
             <h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
-              Forgot your password?
+              Reset your password
             </h1>
 
             <p
@@ -221,16 +245,14 @@ export default function ForgotPasswordPage() {
                   : "text-slate-500"
               }`}
             >
-              Enter the email associated with your GrantCraft
-              account and we'll send you a reset link.
+              Create a new secure password for your
+              GrantCraft account.
             </p>
 
           </div>
 
 
-          {/* =================================================
-              RECOVERY CARD
-              ================================================= */}
+          {/* Card */}
 
           <div
             className={`rounded-3xl border p-7 backdrop-blur-xl transition-all duration-500 sm:p-9 ${
@@ -240,16 +262,14 @@ export default function ForgotPasswordPage() {
             }`}
           >
 
-            {!submitted ? (
+            {!success ? (
 
               <form
                 onSubmit={handleSubmit}
-                className="space-y-6"
+                className="space-y-5"
               >
 
-                {/* =================================================
-                    EMAIL
-                    ================================================= */}
+                {/* Email */}
 
                 <div>
 
@@ -283,9 +303,77 @@ export default function ForgotPasswordPage() {
                 </div>
 
 
-                {/* =================================================
-                    ERROR
-                    ================================================= */}
+                {/* New Password */}
+
+                <div>
+
+                  <label
+                    htmlFor="newPassword"
+                    className={`mb-2 block text-sm font-semibold ${
+                      darkMode
+                        ? "text-slate-200"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    New password
+                  </label>
+
+                  <input
+                    id="newPassword"
+                    type="password"
+                    value={newPassword}
+                    onChange={(event) =>
+                      setNewPassword(event.target.value)
+                    }
+                    placeholder="At least 8 characters"
+                    required
+                    minLength={8}
+                    className={`w-full rounded-xl border px-4 py-3.5 text-sm outline-none transition ${
+                      darkMode
+                        ? "border-white/10 bg-slate-900/70 text-white placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                        : "border-slate-200 bg-slate-50 text-slate-950 placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                    }`}
+                  />
+
+                </div>
+
+
+                {/* Confirm Password */}
+
+                <div>
+
+                  <label
+                    htmlFor="confirmPassword"
+                    className={`mb-2 block text-sm font-semibold ${
+                      darkMode
+                        ? "text-slate-200"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    Confirm new password
+                  </label>
+
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(event) =>
+                      setConfirmPassword(event.target.value)
+                    }
+                    placeholder="Enter your password again"
+                    required
+                    minLength={8}
+                    className={`w-full rounded-xl border px-4 py-3.5 text-sm outline-none transition ${
+                      darkMode
+                        ? "border-white/10 bg-slate-900/70 text-white placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                        : "border-slate-200 bg-slate-50 text-slate-950 placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                    }`}
+                  />
+
+                </div>
+
+
+                {/* Error */}
 
                 {error && (
                   <div className="rounded-xl border border-red-300/30 bg-red-500/5 px-4 py-3 text-sm text-red-500">
@@ -294,13 +382,11 @@ export default function ForgotPasswordPage() {
                 )}
 
 
-                {/* =================================================
-                    SEND RESET LINK
-                    ================================================= */}
+                {/* Reset Button */}
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || !token}
                   className={`w-full rounded-xl px-5 py-3.5 text-sm font-bold shadow-lg transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 ${
                     darkMode
                       ? "bg-white text-slate-950 hover:bg-cyan-400 hover:shadow-cyan-500/20"
@@ -308,8 +394,8 @@ export default function ForgotPasswordPage() {
                   }`}
                 >
                   {loading
-                    ? "Sending..."
-                    : "Send Reset Link →"}
+                    ? "Resetting Password..."
+                    : "Reset Password →"}
                 </button>
 
               </form>
@@ -317,14 +403,12 @@ export default function ForgotPasswordPage() {
             ) : (
 
               /* =================================================
-                 SUCCESS STATE
+                 SUCCESS
                  ================================================= */
 
               <div className="text-center">
 
-                {/* Success Icon */}
-
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-500">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-emerald-500">
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -344,9 +428,8 @@ export default function ForgotPasswordPage() {
 
                 </div>
 
-
                 <h2 className="mt-6 text-2xl font-bold">
-                  Check your email.
+                  Password reset!
                 </h2>
 
                 <p
@@ -356,18 +439,16 @@ export default function ForgotPasswordPage() {
                       : "text-slate-500"
                   }`}
                 >
-                  {message ||
-                    `If an account exists for ${email}, we've sent instructions to reset your password.`}
+                  Your password has been changed
+                  successfully. You can now sign in with
+                  your new password.
                 </p>
-
-
-                {/* Back to Login */}
 
                 <a
                   href="/login"
-                  className="mt-7 inline-block text-sm font-bold text-cyan-500 transition hover:text-cyan-400"
+                  className="mt-7 inline-block rounded-xl bg-cyan-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/20 transition hover:-translate-y-0.5 hover:bg-cyan-400"
                 >
-                  ← Back to Sign In
+                  Continue to Sign In →
                 </a>
 
               </div>
@@ -377,9 +458,7 @@ export default function ForgotPasswordPage() {
           </div>
 
 
-          {/* =================================================
-              FOOTER
-              ================================================= */}
+          {/* Footer */}
 
           <p
             className={`mt-7 text-center text-xs ${
