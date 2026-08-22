@@ -2,8 +2,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-from rag.retriever import get_grant_retriever
-from rag.llm import get_llm
+from app.rag.retriever import get_grant_retriever
+from app.rag.llm import get_llm
 
 
 def format_documents(documents):

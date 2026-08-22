@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.routes");
+const grantRoutes = require("./routes/grant.routes");
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.use(express.json());
 
 // Authentication routes
 app.use("/api/auth", authRoutes);
+
+// Grant matching routes
+app.use("/api/grants", grantRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

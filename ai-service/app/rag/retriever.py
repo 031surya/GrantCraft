@@ -1,7 +1,7 @@
 from langchain_chroma import Chroma
 
-from embeddings.embedder import get_embedding_model
-from vectorstore.chroma_store import VECTOR_DB_DIR, COLLECTION_NAME
+from app.embeddings.embedder import get_embedding_model
+from app.vectorstore.chroma_store import VECTOR_DB_DIR, COLLECTION_NAME
 
 
 def get_vector_store():

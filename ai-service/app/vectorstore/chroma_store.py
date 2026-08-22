@@ -2,7 +2,7 @@ from pathlib import Path
 
 from langchain_chroma import Chroma
 
-from embeddings.embedder import get_embedding_model
+from app.embeddings.embedder import get_embedding_model
 
 
 VECTOR_DB_DIR = Path(__file__).resolve().parents[2] / "vector_db"
