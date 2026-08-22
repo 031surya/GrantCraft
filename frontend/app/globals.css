@@ -163,64 +163,472 @@ html.dark body {
     cursor: none;
   }
 
-  .grant-cursor {
-    position: fixed;
-    z-index: 99999;
-    width: 16px;
-    height: 20px;
-    pointer-events: none;
-    transform: translate(-2px, -2px);
-    transition:
-      transform 120ms ease,
-      opacity 150ms ease;
+  /* =========================================================
+   GRANTCRAFT — MODERN CUSTOM CURSOR
+   ========================================================= */
+
+.grant-cursor {
+  position: fixed;
+
+  width: 18px;
+  height: 18px;
+
+  pointer-events: none;
+
+  z-index: 99999;
+
+  transform: translate(-2px, -2px);
+
+  transition:
+    transform 120ms ease,
+    opacity 150ms ease;
+}
+
+/* Main cursor arrow */
+.grant-cursor-arrow {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 0;
+  height: 0;
+
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 12px solid #06b6d4;
+
+  filter:
+    drop-shadow(0 0 2px #ffffff)
+    drop-shadow(0 0 7px rgba(6, 182, 212, 0.8));
+
+  transform: rotate(-8deg);
+
+  transition:
+    transform 150ms ease,
+    filter 150ms ease;
+}
+
+/* ---------------------------------------------------------
+   Hovering interactive elements
+   --------------------------------------------------------- */
+
+.grant-cursor-hover {
+  transform: translate(-2px, -2px) scale(1.25);
+}
+
+.grant-cursor-hover .grant-cursor-arrow {
+  border-left-color: #7c3aed;
+
+  filter:
+    drop-shadow(0 0 2px #ffffff)
+    drop-shadow(0 0 8px rgba(124, 58, 237, 0.9))
+    drop-shadow(0 0 16px rgba(6, 182, 212, 0.5));
+}
+
+/* ---------------------------------------------------------
+   Dark mode
+   --------------------------------------------------------- */
+
+.dark .grant-cursor-arrow {
+  border-left-color: #22d3ee;
+
+  filter:
+    drop-shadow(0 0 2px #ffffff)
+    drop-shadow(0 0 8px rgba(34, 211, 238, 0.95))
+    drop-shadow(0 0 16px rgba(34, 211, 238, 0.55));
+}
+
+.dark .grant-cursor-hover .grant-cursor-arrow {
+  border-left-color: #a78bfa;
+
+  filter:
+    drop-shadow(0 0 2px #ffffff)
+    drop-shadow(0 0 9px rgba(167, 139, 250, 1))
+    drop-shadow(0 0 18px rgba(34, 211, 238, 0.6));
+}
+}
+
+/* =========================================================
+   GRANTCRAFT — INTENSE CLICK BURST
+   ========================================================= */
+
+@keyframes grant-click-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.2);
   }
 
-  /* Small, clean precision pointer */
-  .grant-cursor-arrow {
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    width: 0;
-    height: 0;
-
-    border-top: 12px solid transparent;
-    border-bottom: 4px solid transparent;
-    border-left: 10px solid #07111f;
-
-    filter:
-      drop-shadow(0 0 3px rgba(34, 211, 238, 0.3));
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
   }
 
-  /* Hover */
-  .grant-cursor-hover {
-    transform:
-      translate(-2px, -2px)
-      scale(1.15);
-  }
-
-  .grant-cursor-hover .grant-cursor-arrow {
-    border-left-color: #06b6d4;
-
-    filter:
-      drop-shadow(0 0 5px rgba(6, 182, 212, 0.6));
-  }
-
-  /* =====================================================
-     DARK MODE
-     ===================================================== */
-
-  .dark .grant-cursor-arrow {
-    border-left-color: #f8fafc;
-
-    filter:
-      drop-shadow(0 0 4px rgba(34, 211, 238, 0.45));
-  }
-
-  .dark .grant-cursor-hover .grant-cursor-arrow {
-    border-left-color: #22d3ee;
-
-    filter:
-      drop-shadow(0 0 6px rgba(34, 211, 238, 0.7));
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.45);
   }
 }
+
+@keyframes grant-click-ray {
+  0% {
+    opacity: 1;
+    height: 5px;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--rotation))
+      translateY(0)
+      scale(0.5);
+  }
+
+  35% {
+    opacity: 1;
+    height: 11px;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--rotation))
+      translateY(-9px)
+      scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    height: 14px;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--rotation))
+      translateY(-24px)
+      scale(0.7);
+  }
+}
+
+.grant-click-burst {
+  position: fixed;
+  z-index: 99998;
+
+  width: 38px;
+  height: 38px;
+
+  pointer-events: none;
+
+  animation: grant-click-burst 420ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+.grant-click-burst span {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 3px;
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: #06b6d4;
+
+  box-shadow:
+    0 0 6px rgba(6, 182, 212, 0.95),
+    0 0 14px rgba(6, 182, 212, 0.75),
+    0 0 24px rgba(34, 211, 238, 0.45);
+
+  animation:
+    grant-click-ray 420ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+.grant-click-burst span:nth-child(1) {
+  --rotation: 0deg;
+}
+
+.grant-click-burst span:nth-child(2) {
+  --rotation: 90deg;
+}
+
+.grant-click-burst span:nth-child(3) {
+  --rotation: 180deg;
+}
+
+.grant-click-burst span:nth-child(4) {
+  --rotation: 270deg;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+.dark .grant-click-burst span {
+  background: #22d3ee;
+
+  box-shadow:
+    0 0 7px rgba(34, 211, 238, 1),
+    0 0 16px rgba(34, 211, 238, 0.9),
+    0 0 28px rgba(139, 92, 246, 0.7);
+}
+
+/* =========================================================
+   GRANTCRAFT INTELLIGENCE CORE
+   ========================================================= */
+
+/* Main G breathing effect */
+.grant-core-center {
+  animation: grant-core-pulse 4s ease-in-out infinite;
+}
+
+/* Soft surrounding glow */
+.grant-core-glow {
+  animation: grant-core-glow 4s ease-in-out infinite;
+}
+
+/* Outer intelligence ring */
+.grant-core-ring-outer {
+  animation: grant-core-rotate 24s linear infinite;
+}
+
+/* Middle ring moves opposite direction */
+.grant-core-ring-middle {
+  animation: grant-core-rotate-reverse 18s linear infinite;
+}
+
+/* Inner ring */
+.grant-core-ring-inner {
+  animation: grant-core-rotate 12s linear infinite;
+}
+
+/* Dashed orbit */
+.grant-core-dashed {
+  animation: grant-core-rotate-reverse 14s linear infinite;
+}
+
+/* Labels */
+.grant-core-label {
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+
+  transition:
+    transform 250ms ease,
+    text-shadow 250ms ease,
+    opacity 250ms ease;
+}
+
+/* Each label gets its own movement */
+.grant-core-documents {
+  animation-name: grant-documents-float;
+}
+
+.grant-core-grants {
+  animation-name: grant-grants-float;
+  animation-delay: -1s;
+}
+
+.grant-core-proposals {
+  animation-name: grant-proposals-float;
+  animation-delay: -2s;
+}
+
+.grant-core-judge {
+  animation-name: grant-judge-float;
+  animation-delay: -3s;
+}
+
+/* Label interaction */
+.grant-core-label:hover {
+  transform: scale(1.15);
+  text-shadow:
+    0 0 8px currentColor,
+    0 0 20px currentColor;
+}
+
+/* =========================================================
+   CORE KEYFRAMES
+   ========================================================= */
+
+@keyframes grant-core-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 50px rgba(34, 211, 238, 0.15),
+      0 0 80px rgba(34, 211, 238, 0.15);
+  }
+
+  50% {
+    transform: scale(1.045);
+    box-shadow:
+      0 0 65px rgba(34, 211, 238, 0.28),
+      0 0 110px rgba(34, 211, 238, 0.18);
+  }
+}
+
+@keyframes grant-core-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes grant-core-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grant-core-rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* =========================================================
+   LABEL MOVEMENT
+   ========================================================= */
+
+@keyframes grant-documents-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes grant-grants-float {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes grant-proposals-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes grant-judge-float {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-8px);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .grant-core-center,
+  .grant-core-glow,
+  .grant-core-ring-outer,
+  .grant-core-ring-middle,
+  .grant-core-ring-inner,
+  .grant-core-dashed,
+  .grant-core-label {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   TEAM PROFILE CARDS
+   ========================================================= */
+
+.team-profile-card {
+  min-height: 430px;
+}
+
+.team-profile-info {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(12px) scale(0.98);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+
+  pointer-events: none;
+
+  overflow-y: auto;
+}
+
+.team-profile-card:hover .team-profile-info {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateY(0) scale(1);
+
+  pointer-events: auto;
+}
+
+.team-profile-main {
+  transition:
+    opacity 0.25s ease,
+    transform 0.3s ease;
+}
+
+.team-profile-card:hover .team-profile-main {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* Keep the expanded information clean */
+
+.team-profile-info::-webkit-scrollbar {
+  width: 3px;
+}
+
+.team-profile-info::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.team-profile-info::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.35);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   GLOBAL SMOOTH NAVIGATION
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+} 
