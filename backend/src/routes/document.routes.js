@@ -5,6 +5,9 @@ const fs = require("fs");
 const authMiddleware = require("../middleware/auth.middleware");
 const { uploadDocument } = require("../services/ai.service");
 
+const Document = require("../models/Document");
+const Organization = require("../models/Organization");
+
 const router = express.Router();
 
 const upload = multer({
@@ -19,6 +22,39 @@ const SUPPORTED_EXTENSIONS = [
   ".txt",
   ".json",
 ];
+
+router.get(
+  "/",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const documents =
+        await Document.find({
+          owner: req.user.userId,
+        })
+          .sort({
+            createdAt: -1,
+          })
+          .lean();
+
+      return res.status(200).json({
+        success: true,
+        data: documents,
+      });
+    } catch (error) {
+      console.error(
+        "Document listing error:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Unable to load documents",
+      });
+    }
+  }
+);
 
 router.post(
   "/upload",
@@ -53,13 +89,80 @@ router.post(
       const documentType =
         req.body.document_type || "uploaded";
 
-      const result = await uploadDocument(
-        uploadedPath,
-        req.file.originalname,
-        documentType
-      );
+  const result = await uploadDocument(
+  uploadedPath,
+  req.file.originalname,
+  documentType
+);
 
-      return res.status(200).json(result);
+const aiData = result?.data || result;
+
+let organizationId = null;
+
+try {
+  const organization =
+    await Organization.findOne({
+      owner: req.user.userId,
+    });
+
+  if (organization) {
+    organizationId =
+      organization._id;
+  }
+} catch (organizationError) {
+  console.error(
+    "Organization lookup failed:",
+    organizationError
+  );
+}
+
+const savedDocument =
+  await Document.create({
+    owner: req.user.userId,
+
+    organization:
+      organizationId,
+
+    originalName:
+      req.file.originalname,
+
+    documentType,
+
+    fileType:
+      extension.replace(".", ""),
+
+    fileSize:
+      req.file.size,
+
+    documentsLoaded:
+      aiData.documents_loaded || 0,
+
+    chunksCreated:
+      aiData.chunks_created || 0,
+
+    status:
+      aiData.status === "indexed"
+        ? "indexed"
+        : "processing",
+
+    source:
+      aiData.source ||
+      req.file.originalname,
+  });
+
+return res.status(200).json({
+  success: true,
+
+  data: {
+    ...aiData,
+
+    document_id:
+      savedDocument._id,
+
+    database_status:
+      savedDocument.status,
+  },
+});
 
     } catch (error) {
       console.error(

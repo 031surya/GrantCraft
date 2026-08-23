@@ -12,12 +12,17 @@ type UploadResult = {
   status: string;
 };
 
-type SessionDocument = {
-  name: string;
-  type: string;
-  size: number;
-  chunks: number;
-  status: "Indexed";
+type DocumentRecord = {
+  _id: string;
+  originalName: string;
+  documentType: string;
+  fileType: string;
+  fileSize: number;
+  documentsLoaded: number;
+  chunksCreated: number;
+  status: string;
+  source: string;
+  createdAt: string;
 };
 
 export default function DocumentsPage() {
@@ -39,7 +44,10 @@ export default function DocumentsPage() {
   const [error, setError] = useState("");
 
   const [documents, setDocuments] =
-    useState<SessionDocument[]>([]);
+    useState<DocumentRecord[]>([]);
+
+  const [loadingDocuments, setLoadingDocuments] =
+    useState(true);
 
   /* =========================================================
      THEME
@@ -60,6 +68,55 @@ export default function DocumentsPage() {
       String(darkMode)
     );
   }, [darkMode]);
+
+  /* =========================================================
+     LOAD PERSISTENT DOCUMENTS
+  ========================================================= */
+
+  const loadDocuments = async () => {
+    try {
+      const token =
+        localStorage.getItem("grantcraft_token");
+
+      if (!token) {
+        setLoadingDocuments(false);
+        return;
+      }
+
+      const response = await fetch(
+        "http://localhost:5000/api/documents",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            data.detail ||
+            "Unable to load documents."
+        );
+      }
+
+      setDocuments(data.data || []);
+    } catch (documentError) {
+      console.error(
+        "Document loading error:",
+        documentError
+      );
+    } finally {
+      setLoadingDocuments(false);
+    }
+  };
+
+  useEffect(() => {
+    loadDocuments();
+  }, []);
 
   /* =========================================================
      NAVIGATION
@@ -157,14 +214,14 @@ export default function DocumentsPage() {
     setUploadResult(null);
 
     try {
-     const token =
-  localStorage.getItem("grantcraft_token");
+      const token =
+        localStorage.getItem("grantcraft_token");
 
-if (!token) {
-  throw new Error(
-    "Authentication token not found. Please log in again."
-  );
-}
+      if (!token) {
+        throw new Error(
+          "Authentication token not found. Please log in again."
+        );
+      }
 
       const formData = new FormData();
 
@@ -204,16 +261,12 @@ if (!token) {
 
       setUploadResult(result);
 
-      setDocuments((previous) => [
-        {
-          name: selectedFile.name,
-          type: documentType,
-          size: selectedFile.size,
-          chunks: result.chunks_created,
-          status: "Indexed",
-        },
-        ...previous,
-      ]);
+      /*
+       * MongoDB is now the source of truth.
+       * Reload the persistent document list instead
+       * of manually creating a temporary frontend item.
+       */
+      await loadDocuments();
 
       setSelectedFile(null);
 
@@ -293,7 +346,7 @@ if (!token) {
           : "bg-slate-50 text-slate-900"
       }`}
     >
-        <CustomCursor />
+      <CustomCursor />
 
       {/* =====================================================
           BACKGROUND GLOWS
@@ -318,6 +371,7 @@ if (!token) {
       </div>
 
       <div className="relative flex min-h-screen">
+
         {/* ===================================================
             SIDEBAR
         =================================================== */}
@@ -329,7 +383,6 @@ if (!token) {
               : "border-slate-200/80 bg-white/70"
           }`}
         >
-          {/* Logo */}
           <div className="mb-10 flex items-center gap-3 px-2">
             <div
               className={`relative flex h-11 w-11 items-center justify-center rounded-xl border shadow-lg ${
@@ -365,7 +418,6 @@ if (!token) {
             </div>
           </div>
 
-          {/* Workspace */}
           <div
             className={`mb-3 px-3 text-[9px] font-bold uppercase tracking-[0.25em] ${
               darkMode
@@ -419,7 +471,6 @@ if (!token) {
             )}
           </nav>
 
-          {/* Bottom */}
           <div className="mt-auto space-y-4">
             <div
               className={`rounded-2xl border p-4 ${
@@ -478,7 +529,7 @@ if (!token) {
         =================================================== */}
 
         <main className="min-w-0 flex-1">
-          {/* Top bar */}
+
           <header
             className={`sticky top-0 z-30 border-b backdrop-blur-2xl ${
               darkMode
@@ -539,6 +590,7 @@ if (!token) {
           </header>
 
           <section className="px-5 py-8 sm:px-8 lg:py-10">
+
             {/* Hero */}
             <div className="mb-8">
               <div className="mb-3 flex items-center gap-2">
@@ -584,14 +636,14 @@ if (!token) {
                 [
                   "Documents",
                   documents.length.toString(),
-                  "This session",
+                  "Indexed documents",
                 ],
                 [
                   "Chunks",
                   documents
                     .reduce(
                       (sum, item) =>
-                        sum + item.chunks,
+                        sum + item.chunksCreated,
                       0
                     )
                     .toString(),
@@ -642,6 +694,7 @@ if (!token) {
 
             {/* Main cards */}
             <div className="grid gap-6 xl:grid-cols-[1.35fr_0.85fr]">
+
               {/* Upload */}
               <div
                 className={`rounded-[26px] border p-5 backdrop-blur-xl sm:p-6 ${
@@ -905,6 +958,7 @@ if (!token) {
 
               {/* Right column */}
               <div className="space-y-6">
+
                 {/* Pipeline */}
                 <div
                   className={`rounded-[26px] border p-5 backdrop-blur-xl sm:p-6 ${
@@ -1028,7 +1082,23 @@ if (!token) {
                     </span>
                   </div>
 
-                  {documents.length === 0 ? (
+                  {loadingDocuments ? (
+                    <div
+                      className={`mt-5 rounded-xl border border-dashed p-5 text-center ${
+                        darkMode
+                          ? "border-white/[0.07] text-white/20"
+                          : "border-slate-200 text-slate-400"
+                      }`}
+                    >
+                      <div className="text-2xl animate-pulse">
+                        ◌
+                      </div>
+
+                      <p className="mt-2 text-[11px]">
+                        Loading your documents...
+                      </p>
+                    </div>
+                  ) : documents.length === 0 ? (
                     <div
                       className={`mt-5 rounded-xl border border-dashed p-5 text-center ${
                         darkMode
@@ -1050,7 +1120,7 @@ if (!token) {
                       {documents.map(
                         (document, index) => (
                           <div
-                            key={`${document.name}-${index}`}
+                            key={`${document._id}-${index}`}
                             className={`flex items-center gap-3 rounded-xl border p-3 ${
                               darkMode
                                 ? "border-white/[0.05] bg-white/[0.015]"
@@ -1065,13 +1135,13 @@ if (!token) {
                               }`}
                             >
                               {getFileIcon(
-                                document.name
+                                document.originalName
                               )}
                             </div>
 
                             <div className="min-w-0 flex-1">
                               <p className="truncate text-[11px] font-semibold">
-                                {document.name}
+                                {document.originalName}
                               </p>
 
                               <p
@@ -1081,20 +1151,22 @@ if (!token) {
                                     : "text-slate-400"
                                 }`}
                               >
-                                {document.type} ·{" "}
+                                {document.documentType} ·{" "}
                                 {formatFileSize(
-                                  document.size
+                                  document.fileSize
                                 )}{" "}
                                 ·{" "}
                                 {
-                                  document.chunks
+                                  document.chunksCreated
                                 }{" "}
                                 chunks
                               </p>
                             </div>
 
                             <span className="text-[9px] font-bold text-emerald-500">
-                              Indexed
+                              {document.status === "indexed"
+                                ? "Indexed"
+                                : document.status}
                             </span>
                           </div>
                         )
