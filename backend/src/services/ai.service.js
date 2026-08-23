@@ -35,6 +35,43 @@ const matchGrants = async (grantRequest) => {
   }
 };
 
+
+const generateProposal = async (proposalRequest) => {
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 180000);
+
+  try {
+    const response = await fetch(
+      `${AI_SERVICE_URL}/proposals/generate`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(proposalRequest),
+        signal: controller.signal,
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.detail || "AI proposal generation failed"
+      );
+    }
+
+    return data;
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+
 module.exports = {
   matchGrants,
+  generateProposal,
 };

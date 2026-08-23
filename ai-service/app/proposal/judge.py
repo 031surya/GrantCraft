@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-from rag.llm import get_llm
+from app.rag.llm import get_llm
 
 
 JUDGE_PROMPT = ChatPromptTemplate.from_template(

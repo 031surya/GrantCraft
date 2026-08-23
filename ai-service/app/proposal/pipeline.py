@@ -1,11 +1,11 @@
 import json
 
-from proposal.writer import (
+from app.proposal.writer import (
     get_proposal_writer,
     get_proposal_revision_chain,
 )
-from proposal.judge import get_factuality_judge
-from proposal.constraints import validate_proposal
+from app.proposal.judge import get_factuality_judge
+from app.proposal.constraints import validate_proposal
 
 
 REQUIRED_SECTIONS = [
