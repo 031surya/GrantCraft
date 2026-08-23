@@ -435,13 +435,28 @@ export default function DashboardPage() {
               <button
   key={label}
   onClick={() => {
-    if (label === "Grant Matches") {
-      window.location.href = "/grant-matches";
-      return;
-    }
+  if (label === "Grant Matches") {
+    window.location.href = "/grant-matches";
+    return;
+  }
 
-    setActive(label);
-  }}
+  if (label === "Proposal Generator") {
+    window.location.href = "/proposal-generator";
+    return;
+  }
+
+  if (label === "AI Audit") {
+    window.location.href = "/ai-audit";
+    return;
+  }
+
+  if (label === "Documents") {
+    window.location.href = "/documents";
+    return;
+  }
+
+  setActive(label);
+}}
                 className={`group flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-all duration-200 ${
                   active === label
                     ? darkMode

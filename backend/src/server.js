@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth.routes");
 const grantRoutes = require("./routes/grant.routes");
 const proposalRoutes = require("./routes/proposal.routes");
 const auditRoutes = require("./routes/audit.routes");
+const documentRoutes = require("./routes/document.routes");
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.use("/api/proposals", proposalRoutes);
 
 // AI audit routes
 app.use("/api/audit", auditRoutes);
+
+app.use("/api/documents", documentRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
