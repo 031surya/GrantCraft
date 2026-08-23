@@ -49,6 +49,12 @@ export default function DocumentsPage() {
   const [loadingDocuments, setLoadingDocuments] =
     useState(true);
 
+  const [deletingDocumentId, setDeletingDocumentId] =
+    useState<string | null>(null);
+
+  const [selectedDocument, setSelectedDocument] =
+    useState<DocumentRecord | null>(null);
+
   /* =========================================================
      THEME
   ========================================================= */
@@ -290,6 +296,71 @@ export default function DocumentsPage() {
   };
 
   /* =========================================================
+     DELETE DOCUMENT
+  ========================================================= */
+
+  const handleDeleteDocument = async (
+    documentId: string,
+    documentName: string
+  ) => {
+    const confirmed = window.confirm(
+      `Delete "${documentName}"? This will remove the document from your GrantCraft library.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const token =
+        localStorage.getItem("grantcraft_token");
+
+      if (!token) {
+        throw new Error(
+          "Authentication token not found. Please log in again."
+        );
+      }
+
+      setDeletingDocumentId(documentId);
+      setError("");
+
+      const response = await fetch(
+        `http://localhost:5000/api/documents/${documentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            data.detail ||
+            "Unable to delete document."
+        );
+      }
+
+      setDocuments((currentDocuments) =>
+        currentDocuments.filter(
+          (item) => item._id !== documentId
+        )
+      );
+    } catch (deleteError) {
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : "Unable to delete document."
+      );
+    } finally {
+      setDeletingDocumentId(null);
+    }
+  };
+
+  /* =========================================================
      HELPERS
   ========================================================= */
 
@@ -320,6 +391,16 @@ export default function DocumentsPage() {
     if (extension === "json") return "{}";
 
     return "TXT";
+  };
+
+  const formatDocumentDate = (value: string) => {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "Unknown";
+    }
+
+    return date.toLocaleString();
   };
 
   /* =========================================================
@@ -1163,11 +1244,51 @@ export default function DocumentsPage() {
                               </p>
                             </div>
 
-                            <span className="text-[9px] font-bold text-emerald-500">
-                              {document.status === "indexed"
-                                ? "Indexed"
-                                : document.status}
-                            </span>
+                            <div className="flex shrink-0 items-center gap-2">
+                              <span className="text-[9px] font-bold text-emerald-500">
+                                {document.status === "indexed"
+                                  ? "Indexed"
+                                  : document.status}
+                              </span>
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setSelectedDocument(document)
+                                }
+                                className={`rounded-lg border px-2.5 py-1.5 text-[9px] font-semibold transition ${
+                                  darkMode
+                                    ? "border-cyan-400/10 bg-cyan-400/[0.04] text-cyan-300/80 hover:border-cyan-400/20 hover:bg-cyan-400/[0.08] hover:text-cyan-200"
+                                    : "border-cyan-200 bg-cyan-50 text-cyan-600 hover:bg-cyan-100"
+                                }`}
+                              >
+                                Details
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleDeleteDocument(
+                                    document._id,
+                                    document.originalName
+                                  )
+                                }
+                                disabled={
+                                  deletingDocumentId ===
+                                  document._id
+                                }
+                                className={`rounded-lg border px-2.5 py-1.5 text-[9px] font-semibold transition ${
+                                  darkMode
+                                    ? "border-red-400/10 bg-red-400/[0.04] text-red-300/70 hover:border-red-400/20 hover:bg-red-400/[0.08] hover:text-red-200"
+                                    : "border-red-200 bg-red-50 text-red-500 hover:bg-red-100"
+                                } disabled:cursor-not-allowed disabled:opacity-50`}
+                              >
+                                {deletingDocumentId ===
+                                document._id
+                                  ? "..."
+                                  : "Delete"}
+                              </button>
+                            </div>
                           </div>
                         )
                       )}
@@ -1211,6 +1332,84 @@ export default function DocumentsPage() {
                 </div>
               </div>
             </div>
+          {selectedDocument && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm"
+              onClick={() => setSelectedDocument(null)}
+            >
+              <div
+                role="dialog"
+                aria-modal="true"
+                className={`w-full max-w-lg rounded-[26px] border p-6 shadow-2xl ${
+                  darkMode
+                    ? "border-white/[0.08] bg-[#07111f]"
+                    : "border-slate-200 bg-white"
+                }`}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p
+                      className={`text-[9px] font-bold uppercase tracking-[0.2em] ${
+                        darkMode ? "text-cyan-300/60" : "text-cyan-600"
+                      }`}
+                    >
+                      Document details
+                    </p>
+                    <h3 className="mt-2 truncate text-xl font-bold">
+                      {selectedDocument.originalName}
+                    </h3>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDocument(null)}
+                    className={`rounded-xl border px-3 py-2 text-xs ${
+                      darkMode
+                        ? "border-white/[0.08] text-white/50 hover:bg-white/[0.05]"
+                        : "border-slate-200 text-slate-500 hover:bg-slate-50"
+                    }`}
+                  >
+                    Close
+                  </button>
+                </div>
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["Document type", selectedDocument.documentType],
+                    ["File type", selectedDocument.fileType.toUpperCase()],
+                    ["File size", formatFileSize(selectedDocument.fileSize)],
+                    ["Documents loaded", String(selectedDocument.documentsLoaded)],
+                    ["Chunks created", String(selectedDocument.chunksCreated)],
+                    ["Status", selectedDocument.status],
+                    ["Source", selectedDocument.source || selectedDocument.originalName],
+                    ["Uploaded", formatDocumentDate(selectedDocument.createdAt)],
+                  ].map(([label, value]) => (
+                    <div
+                      key={label}
+                      className={`rounded-xl border p-3 ${
+                        darkMode
+                          ? "border-white/[0.05] bg-white/[0.02]"
+                          : "border-slate-200 bg-slate-50"
+                      }`}
+                    >
+                      <p
+                        className={`text-[8px] font-bold uppercase tracking-[0.18em] ${
+                          darkMode ? "text-white/25" : "text-slate-400"
+                        }`}
+                      >
+                        {label}
+                      </p>
+                      <p className="mt-1 break-words text-xs font-semibold">
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           </section>
         </main>
       </div>

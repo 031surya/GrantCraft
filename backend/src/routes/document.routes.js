@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
+const path = require("path");
 
 const authMiddleware = require("../middleware/auth.middleware");
 const { uploadDocument } = require("../services/ai.service");
@@ -23,19 +24,23 @@ const SUPPORTED_EXTENSIONS = [
   ".json",
 ];
 
+/* =========================================================
+   GET /api/documents
+   List documents belonging to authenticated user
+========================================================= */
+
 router.get(
   "/",
   authMiddleware,
   async (req, res) => {
     try {
-      const documents =
-        await Document.find({
-          owner: req.user.userId,
+      const documents = await Document.find({
+        owner: req.user.userId,
+      })
+        .sort({
+          createdAt: -1,
         })
-          .sort({
-            createdAt: -1,
-          })
-          .lean();
+        .lean();
 
       return res.status(200).json({
         success: true,
@@ -49,12 +54,64 @@ router.get(
 
       return res.status(500).json({
         success: false,
-        message:
-          "Unable to load documents",
+        message: "Unable to load documents",
       });
     }
   }
 );
+
+/* =========================================================
+   DELETE /api/documents/:id
+========================================================= */
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const document = await Document.findOne({
+        _id: req.params.id,
+        owner: req.user.userId,
+      });
+
+      if (!document) {
+        return res.status(404).json({
+          success: false,
+          message: "Document not found",
+        });
+      }
+
+      await Document.deleteOne({
+        _id: document._id,
+        owner: req.user.userId,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Document deleted successfully",
+        data: {
+          document_id: document._id,
+          originalName: document.originalName,
+        },
+      });
+    } catch (error) {
+      console.error(
+        "Document deletion error:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message: "Unable to delete document",
+      });
+    }
+  }
+);
+
+/* =========================================================
+   POST /api/documents/upload
+   Upload → AI ingestion → MongoDB
+========================================================= */
 
 router.post(
   "/upload",
@@ -73,12 +130,13 @@ router.post(
 
       uploadedPath = req.file.path;
 
-      const extension =
-        require("path")
-          .extname(req.file.originalname)
-          .toLowerCase();
+      const extension = path
+        .extname(req.file.originalname)
+        .toLowerCase();
 
-      if (!SUPPORTED_EXTENSIONS.includes(extension)) {
+      if (
+        !SUPPORTED_EXTENSIONS.includes(extension)
+      ) {
         return res.status(400).json({
           success: false,
           message:
@@ -89,102 +147,175 @@ router.post(
       const documentType =
         req.body.document_type || "uploaded";
 
-  const result = await uploadDocument(
-  uploadedPath,
-  req.file.originalname,
-  documentType
-);
+      /* -----------------------------------------------------
+         Find user's organization
+      ----------------------------------------------------- */
 
-const aiData = result?.data || result;
+      let organizationId = null;
 
-let organizationId = null;
+      try {
+        const organization =
+          await Organization.findOne({
+            owner: req.user.userId,
+          });
 
-try {
-  const organization =
-    await Organization.findOne({
-      owner: req.user.userId,
-    });
+        if (organization) {
+          organizationId =
+            organization._id;
+        }
+      } catch (organizationError) {
+        console.error(
+          "Organization lookup failed:",
+          organizationError
+        );
+      }
 
-  if (organization) {
-    organizationId =
-      organization._id;
-  }
-} catch (organizationError) {
-  console.error(
-    "Organization lookup failed:",
-    organizationError
-  );
-}
+      /* -----------------------------------------------------
+         Send document to AI service
+      ----------------------------------------------------- */
 
-const savedDocument =
-  await Document.create({
-    owner: req.user.userId,
+      let result;
 
-    organization:
-      organizationId,
+      try {
+        result = await uploadDocument(
+          uploadedPath,
+          req.file.originalname,
+          documentType
+        );
+      } catch (aiError) {
+        /*
+         * AI processing failed.
+         * Save the document so the user can see
+         * that processing failed and why.
+         */
 
-    originalName:
-      req.file.originalname,
+        await Document.create({
+          owner: req.user.userId,
 
-    documentType,
+          organization:
+            organizationId,
 
-    fileType:
-      extension.replace(".", ""),
+          originalName:
+            req.file.originalname,
 
-    fileSize:
-      req.file.size,
+          documentType,
 
-    documentsLoaded:
-      aiData.documents_loaded || 0,
+          fileType:
+            extension.replace(".", ""),
 
-    chunksCreated:
-      aiData.chunks_created || 0,
+          fileSize:
+            req.file.size,
 
-    status:
-      aiData.status === "indexed"
-        ? "indexed"
-        : "processing",
+          documentsLoaded: 0,
 
-    source:
-      aiData.source ||
-      req.file.originalname,
-  });
+          chunksCreated: 0,
 
-return res.status(200).json({
-  success: true,
+          status: "failed",
 
-  data: {
-    ...aiData,
+          source:
+            req.file.originalname,
 
-    document_id:
-      savedDocument._id,
+          errorMessage:
+            aiError instanceof Error
+              ? aiError.message
+              : "AI document processing failed",
+        });
 
-    database_status:
-      savedDocument.status,
-  },
-});
+        console.error(
+          "AI document processing failed:",
+          aiError
+        );
 
+        if (
+          aiError &&
+          aiError.name === "AbortError"
+        ) {
+          return res.status(504).json({
+            success: false,
+            message:
+              "AI document processing took too long",
+          });
+        }
+
+        return res.status(502).json({
+          success: false,
+          message:
+            "Unable to process document through AI service",
+        });
+      }
+
+      const aiData =
+        result?.data || result;
+
+      /* -----------------------------------------------------
+         Save successful document record
+      ----------------------------------------------------- */
+
+      const savedDocument =
+        await Document.create({
+          owner: req.user.userId,
+
+          organization:
+            organizationId,
+
+          originalName:
+            req.file.originalname,
+
+          documentType,
+
+          fileType:
+            extension.replace(".", ""),
+
+          fileSize:
+            req.file.size,
+
+          documentsLoaded:
+            aiData.documents_loaded || 0,
+
+          chunksCreated:
+            aiData.chunks_created || 0,
+
+          status:
+            aiData.status === "indexed"
+              ? "indexed"
+              : "processing",
+
+          source:
+            aiData.source ||
+            req.file.originalname,
+
+          errorMessage: null,
+        });
+
+      return res.status(200).json({
+        success: true,
+
+        data: {
+          ...aiData,
+
+          document_id:
+            savedDocument._id,
+
+          database_status:
+            savedDocument.status,
+        },
+      });
     } catch (error) {
       console.error(
         "Document upload error:",
         error
       );
 
-      if (error.name === "AbortError") {
-        return res.status(504).json({
-          success: false,
-          message:
-            "AI document processing took too long",
-        });
-      }
-
-      return res.status(502).json({
+      return res.status(500).json({
         success: false,
         message:
-          "Unable to process document through AI service",
+          "Unable to process document upload",
       });
-
     } finally {
+      /* -----------------------------------------------------
+         Remove temporary uploaded file
+      ----------------------------------------------------- */
+
       if (
         uploadedPath &&
         fs.existsSync(uploadedPath)
