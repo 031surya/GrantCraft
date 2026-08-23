@@ -1,7 +1,7 @@
 const AI_SERVICE_URL =
   process.env.AI_SERVICE_URL || "http://localhost:8000";
 
-const matchGrants = async (program) => {
+const matchGrants = async (grantRequest) => {
   const controller = new AbortController();
 
   const timeout = setTimeout(() => {
@@ -16,9 +16,7 @@ const matchGrants = async (program) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          program,
-        }),
+        body: JSON.stringify(grantRequest),
         signal: controller.signal,
       }
     );

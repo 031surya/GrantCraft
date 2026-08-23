@@ -20,8 +20,12 @@ class GrantMatch(BaseModel):
         le=100
     )
 
+    why_it_matches: list[str] = Field(
+        description="Short evidence-based reasons why the project matches the grant"
+    )
+
     eligibility_notes: str = Field(
-        description="Evidence-based eligibility and alignment notes"
+        description="Evidence-based eligibility notes and missing information"
     )
 
 
