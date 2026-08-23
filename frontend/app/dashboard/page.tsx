@@ -433,8 +433,15 @@ export default function DashboardPage() {
               ["↑", "Documents"],
             ].map(([icon, label]) => (
               <button
-                key={label}
-                onClick={() => setActive(label)}
+  key={label}
+  onClick={() => {
+    if (label === "Grant Matches") {
+      window.location.href = "/grant-matches";
+      return;
+    }
+
+    setActive(label);
+  }}
                 className={`group flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-all duration-200 ${
                   active === label
                     ? darkMode
