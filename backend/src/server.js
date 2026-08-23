@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.routes");
 const grantRoutes = require("./routes/grant.routes");
 const proposalRoutes = require("./routes/proposal.routes");
+const auditRoutes = require("./routes/audit.routes");
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use("/api/grants", grantRoutes);
 
 // Proposal generation routes
 app.use("/api/proposals", proposalRoutes);
+
+// AI audit routes
+app.use("/api/audit", auditRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

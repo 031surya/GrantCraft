@@ -2,12 +2,15 @@ import json
 
 from langchain_core.prompts import ChatPromptTemplate
 
-from rag.llm import get_llm
-from judge.schemas import (
+from app.rag.llm import get_llm
+from app.judge.schemas import (
     JudgeAuditReport,
     UnsupportedClaim,
 )
-from judge.metrics import extract_numbers, normalize_number
+from app.judge.metrics import (
+    extract_numbers,
+    normalize_number,
+)
 
 
 JUDGE_PROMPT = ChatPromptTemplate.from_template(
@@ -38,16 +41,60 @@ Check especially:
 - funding claims
 - important impact metrics
 
-STRICT RULES:
+STRICT FACTUALITY RULES:
 
-- Use ONLY the supplied sources.
+- Use ONLY the supplied NGO PROGRAM and GRANT as factual sources.
 - Never invent evidence.
 - Never infer missing facts.
-- Never treat assumptions as facts.
-- Flag claims that are not supported.
-- Flag metrics that are not supported.
-- overall_pass must be false if material unsupported claims exist.
+- Never treat assumptions as existing facts.
+- Flag unsupported factual claims.
+- Flag unsupported metrics.
+- Flag invented beneficiaries, activities, outcomes, partnerships,
+  timelines, evaluation procedures, funding information, or
+  organizational facts.
+- overall_pass must be false if material unsupported factual claims exist.
 - accuracy_score must be an integer from 0 to 100.
+
+PROPOSED ACTIVITIES:
+
+Clearly labelled future or proposed activities are NOT factual claims
+about what the organization has already done.
+
+For example:
+
+"Proposed implementation activities would focus on..."
+
+"Future evaluation could assess..."
+
+These statements may PASS when they are clearly framed as proposed
+activities and do not claim that the activity has already occurred.
+
+However, proposed activities must NOT contain invented completed
+outcomes, statistics, beneficiaries, partnerships, or historical facts.
+
+EXPECTED OUTCOMES:
+
+Do not accept invented outcomes merely because they are phrased
+positively.
+
+Claims such as:
+- improved confidence
+- increased employment
+- improved academic performance
+- increased income
+- measurable skill improvement
+
+must be supported by the source or clearly framed as a future objective
+rather than an achieved result.
+
+SOURCE VS GRANT PRIORITIES:
+
+A grant's focus area does not prove that the NGO already performs that
+activity.
+
+For example, if the grant focuses on "digital literacy", that does not
+prove that the NGO conducts workshops, mentoring, laptop distribution,
+or internet training unless the NGO source says so.
 
 IMPORTANT:
 Keep the response SHORT.

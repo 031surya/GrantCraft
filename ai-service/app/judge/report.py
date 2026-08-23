@@ -1,6 +1,6 @@
 import json
 
-from judge.schemas import JudgeAuditReport
+from app.judge.schemas import JudgeAuditReport
 
 
 def build_audit_report(

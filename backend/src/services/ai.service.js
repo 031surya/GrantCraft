@@ -71,7 +71,43 @@ const generateProposal = async (proposalRequest) => {
 };
 
 
+const auditProposal = async (auditRequest) => {
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 180000);
+
+  try {
+    const response = await fetch(
+      `${AI_SERVICE_URL}/audit`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(auditRequest),
+        signal: controller.signal,
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.detail || "AI audit service request failed"
+      );
+    }
+
+    return data;
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+
 module.exports = {
   matchGrants,
   generateProposal,
+  auditProposal,
 };
