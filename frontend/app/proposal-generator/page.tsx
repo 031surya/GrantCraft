@@ -410,6 +410,14 @@ export default function ProposalGeneratorPage() {
       }
 
       setResult(data.data);
+
+      // Save generated proposal to history
+      try {
+        await saveProposalHistory(data.data);
+      } catch (historyError) {
+        console.error("History save error:", historyError);
+        // Proposal generation succeeded even if history saving failed.
+      }
     } catch (generationError) {
       console.error(
         "Proposal generation error:",
@@ -424,6 +432,104 @@ export default function ProposalGeneratorPage() {
     } finally {
       setGenerating(false);
     }
+  };
+
+  // =====================================================
+  // SAVE PROPOSAL TO HISTORY
+  // =====================================================
+
+  const saveProposalHistory = async (
+    proposalData: ProposalData
+  ) => {
+    const token = localStorage.getItem("grantcraft_token");
+
+    if (!token) {
+      throw new Error("Authentication token not found.");
+    }
+
+    const proposal = proposalData.proposal;
+
+    const response = await fetch(
+      "http://localhost:5000/api/history",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          grant: {
+            grantId: grantId.trim(),
+            funderName: funderName.trim(),
+            grantTitle: grantTitle.trim(),
+            funding: {
+              min: null,
+              max: null,
+              currency: currency.trim().toUpperCase(),
+              requestedAmount: Number(requestedAmount),
+              fitsRange: false,
+            },
+            deadline: null,
+          },
+
+          proposal: {
+            organizationBackground:
+              proposal.organization_background || "",
+            programDescription:
+              proposal.program_description || "",
+            targetBeneficiaries:
+              proposal.target_beneficiaries || "",
+            expectedOutcomes:
+              proposal.expected_outcomes || "",
+            implementationPlan:
+              proposal.implementation_plan || "",
+            evaluationPlan:
+              proposal.evaluation_plan || "",
+            budgetSummary:
+              proposal.budget_summary || "",
+          },
+
+          audit: {
+            status: proposalData.factuality_audit
+              .toLowerCase()
+              .includes("pass: true")
+              ? "PASS"
+              : "FAIL",
+            accuracyScore: null,
+            totalChecked: 0,
+            verified: 0,
+            mismatches: 0,
+            notFound: 0,
+            unsupportedClaimsCount: 0,
+            summary: proposalData.factuality_audit || "",
+          },
+
+          revisionCount: proposalData.revision_count || 0,
+          wordCount:
+            proposalData.constraint_validation.word_count || 0,
+          wordLimit:
+            proposalData.constraint_validation.word_limit ||
+            Number(wordLimit) ||
+            1500,
+          status: "audited",
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(
+        data.message || "Unable to save proposal history."
+      );
+    }
+
+    console.log(
+      "Proposal history saved successfully:",
+      data.data
+    );
+
+    return data.data;
   };
 
   // =====================================================

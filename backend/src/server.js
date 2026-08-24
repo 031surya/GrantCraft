@@ -8,6 +8,8 @@ const grantRoutes = require("./routes/grant.routes");
 const proposalRoutes = require("./routes/proposal.routes");
 const auditRoutes = require("./routes/audit.routes");
 const documentRoutes = require("./routes/document.routes");
+const organizationRoutes = require("./routes/organization.routes");
+const historyRoutes = require("./routes/history.routes");
 
 const app = express();
 
@@ -29,7 +31,20 @@ app.use("/api/proposals", proposalRoutes);
 // AI audit routes
 app.use("/api/audit", auditRoutes);
 
+// Documents routes
 app.use("/api/documents", documentRoutes);
+
+// Organization routes
+app.use(
+  "/api/organization",
+  organizationRoutes
+);
+
+// Proposal & Grant History routes
+app.use(
+  "/api/history",
+  historyRoutes
+);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -44,7 +59,9 @@ const startServer = async () => {
   await connectDB();
 
   app.listen(PORT, () => {
-    console.log(`GrantCraft backend running on http://localhost:${PORT}`);
+    console.log(
+      `GrantCraft backend running on http://localhost:${PORT}`
+    );
   });
 };
 
