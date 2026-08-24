@@ -6,6 +6,7 @@ from app.proposal.writer import (
 )
 from app.proposal.judge import get_factuality_judge
 from app.proposal.constraints import validate_proposal
+from app.rag.retriever import get_evidence_retriever
 
 
 REQUIRED_SECTIONS = [
@@ -28,6 +29,7 @@ def generate_proposal(
     writer = get_proposal_writer()
     judge = get_factuality_judge()
     revision_chain = get_proposal_revision_chain()
+    evidence_retriever = get_evidence_retriever()
 
     program_text = json.dumps(
         program,
@@ -53,6 +55,26 @@ def generate_proposal(
     )
 
     # ---------------------------------------------------------
+    # Retrieve NGO evidence
+    # ---------------------------------------------------------
+
+    evidence_documents = evidence_retriever.invoke(
+        program_text
+    )
+
+    evidence_text = "\n\n".join(
+        [
+            f"""
+Source: {document.metadata.get("source")}
+
+Evidence:
+{document.page_content}
+"""
+            for document in evidence_documents
+        ]
+    )
+
+    # ---------------------------------------------------------
     # 1. Generate initial proposal
     # ---------------------------------------------------------
 
@@ -61,6 +83,7 @@ def generate_proposal(
             "program": program_text,
             "grant": grant_text,
             "requirements": requirements_text,
+            "evidence": evidence_text,
         }
     )
 
@@ -97,10 +120,10 @@ def generate_proposal(
         )
 
         audit_text = (
-    audit.content.strip()
-    if audit.content
-    else "PASS: false\n\nISSUES:\n- Judge returned an empty audit.\n\nSUMMARY:\nFactuality review failed."
-)
+            audit.content.strip()
+            if audit.content
+            else "PASS: false\n\nISSUES:\n- Judge returned an empty audit.\n\nSUMMARY:\nFactuality review failed."
+        )
 
         # -----------------------------------------------------
         # 4. Check whether proposal passed

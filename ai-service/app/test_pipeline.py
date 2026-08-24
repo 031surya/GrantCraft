@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from proposal.pipeline import generate_proposal
+from app.proposal.pipeline import generate_proposal
 
 
 NGO_FILE = (

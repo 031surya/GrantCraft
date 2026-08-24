@@ -62,6 +62,14 @@ You must write the proposal using ONLY facts explicitly contained in:
 1. NGO PROGRAM
 2. GRANT OPPORTUNITY
 3. FUNDER REQUIREMENTS
+4. RETRIEVED NGO EVIDENCE
+
+RETRIEVED NGO EVIDENCE is the primary supporting source for
+organization facts, program facts, outcomes, beneficiaries, activities,
+and documented impact.
+
+If a factual claim is not supported by the NGO PROGRAM or RETRIEVED NGO
+EVIDENCE, do not present it as an existing fact.
 
 Do NOT use general knowledge.
 Do NOT fill missing information with assumptions.
@@ -195,6 +203,9 @@ GRANT OPPORTUNITY:
 
 FUNDER REQUIREMENTS:
 {requirements}
+
+RETRIEVED NGO EVIDENCE:
+{evidence}
 
 Create the proposal now.
 
