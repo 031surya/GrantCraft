@@ -36,6 +36,18 @@ type GrantMatchResponse = {
   message?: string;
 };
 
+type DashboardStats = {
+  totalProposals: number;
+  drafts: number;
+  audited: number;
+  submitted: number;
+  accepted: number;
+  rejected: number;
+  totalAudited: number;
+  averageAccuracy?: number;
+  auditPassRate?: number;
+};
+
 const pipeline = [
   {
     name: "RAG Retrieval",
@@ -93,6 +105,16 @@ export default function DashboardPage() {
   const [matching, setMatching] = useState(false);
   const [matchError, setMatchError] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+
+  // =====================================================
+  // REAL DASHBOARD INTELLIGENCE STATE
+  // =====================================================
+
+  const [dashboardStats, setDashboardStats] =
+    useState<DashboardStats | null>(null);
+  const [loadingDashboardStats, setLoadingDashboardStats] =
+    useState(true);
+  const [dashboardError, setDashboardError] = useState("");
 
   const [ngoName, setNgoName] = useState("");
   const [organizationType, setOrganizationType] =
@@ -166,6 +188,55 @@ export default function DashboardPage() {
     };
 
     verifySession();
+  }, []);
+
+  // =====================================================
+  // DASHBOARD INTELLIGENCE
+  // =====================================================
+
+  useEffect(() => {
+    const loadDashboardStats = async () => {
+      const token = localStorage.getItem("grantcraft_token");
+
+      if (!token) return;
+
+      setLoadingDashboardStats(true);
+      setDashboardError("");
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/history/dashboard",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.message || "Unable to load dashboard intelligence."
+          );
+        }
+
+        setDashboardStats(data.data || null);
+      } catch (error) {
+        console.error("Dashboard intelligence error:", error);
+
+        setDashboardError(
+          error instanceof Error
+            ? error.message
+            : "Unable to load dashboard intelligence."
+        );
+      } finally {
+        setLoadingDashboardStats(false);
+      }
+    };
+
+    loadDashboardStats();
   }, []);
 
   // =====================================================
@@ -431,6 +502,7 @@ export default function DashboardPage() {
               ["✎", "Proposal Generator"],
               ["◈", "AI Audit"],
               ["↑", "Documents"],
+              ["◷", "History"],
             ].map(([icon, label]) => (
               <button
   key={label}
@@ -452,6 +524,11 @@ export default function DashboardPage() {
 
   if (label === "Documents") {
     window.location.href = "/documents";
+    return;
+  }
+
+  if (label === "History") {
+    window.location.href = "/history";
     return;
   }
 
@@ -1418,8 +1495,14 @@ export default function DashboardPage() {
                 ],
                 [
                   "PROPOSALS",
-                  "—",
-                  "proposal agent ready",
+                  loadingDashboardStats
+                    ? "..."
+                    : dashboardStats
+                      ? String(dashboardStats.totalProposals)
+                      : "—",
+                  dashboardError
+                    ? "unable to load"
+                    : "saved proposal history",
                 ],
                 [
                   "AVG. MATCH",
@@ -1470,6 +1553,131 @@ export default function DashboardPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* =================================================
+                DASHBOARD INTELLIGENCE
+                ================================================= */}
+
+            {dashboardError && (
+              <div
+                className={`mb-4 rounded-xl border px-4 py-3 text-xs ${
+                  darkMode
+                    ? "border-amber-400/15 bg-amber-400/[0.04] text-amber-300"
+                    : "border-amber-200 bg-amber-50 text-amber-700"
+                }`}
+              >
+                {dashboardError}
+              </div>
+            )}
+
+            <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["DRAFTS", dashboardStats?.drafts ?? 0],
+                ["AUDITED", dashboardStats?.audited ?? 0],
+                ["SUBMITTED", dashboardStats?.submitted ?? 0],
+                ["ACCEPTED", dashboardStats?.accepted ?? 0],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className={`rounded-2xl border p-4 ${
+                    darkMode
+                      ? "border-white/[0.06] bg-white/[0.02]"
+                      : "border-slate-200 bg-white/70"
+                  }`}
+                >
+                  <p
+                    className={`text-[9px] font-bold tracking-[0.18em] ${
+                      darkMode ? "text-white/25" : "text-slate-400"
+                    }`}
+                  >
+                    {label}
+                  </p>
+                  <p className="mt-2 text-2xl font-semibold">
+                    {loadingDashboardStats ? "..." : value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div
+              className={`mb-6 rounded-2xl border p-5 ${
+                darkMode
+                  ? "border-white/[0.07] bg-white/[0.025]"
+                  : "border-slate-200 bg-white/80"
+              }`}
+            >
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p
+                    className={`text-[9px] font-bold uppercase tracking-[0.2em] ${
+                      darkMode ? "text-cyan-300/50" : "text-cyan-600"
+                    }`}
+                  >
+                    Proposal intelligence
+                  </p>
+                  <h4 className="mt-1.5 text-lg font-semibold">
+                    History performance
+                  </h4>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  <div className={`rounded-xl border px-4 py-3 text-center ${
+                    darkMode
+                      ? "border-white/[0.06] bg-black/20"
+                      : "border-slate-200 bg-slate-50"
+                  }`}>
+                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                      darkMode ? "text-white/25" : "text-slate-400"
+                    }`}>
+                      Total audited
+                    </p>
+                    <p className="mt-1 text-lg font-semibold">
+                      {loadingDashboardStats
+                        ? "..."
+                        : dashboardStats?.totalAudited ?? 0}
+                    </p>
+                  </div>
+
+                  <div className={`rounded-xl border px-4 py-3 text-center ${
+                    darkMode
+                      ? "border-white/[0.06] bg-black/20"
+                      : "border-slate-200 bg-slate-50"
+                  }`}>
+                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                      darkMode ? "text-white/25" : "text-slate-400"
+                    }`}>
+                      Avg. accuracy
+                    </p>
+                    <p className="mt-1 text-lg font-semibold text-cyan-500">
+                      {loadingDashboardStats
+                        ? "..."
+                        : typeof dashboardStats?.averageAccuracy === "number"
+                          ? `${dashboardStats.averageAccuracy}%`
+                          : "—"}
+                    </p>
+                  </div>
+
+                  <div className={`rounded-xl border px-4 py-3 text-center ${
+                    darkMode
+                      ? "border-white/[0.06] bg-black/20"
+                      : "border-slate-200 bg-slate-50"
+                  }`}>
+                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                      darkMode ? "text-white/25" : "text-slate-400"
+                    }`}>
+                      Pass rate
+                    </p>
+                    <p className="mt-1 text-lg font-semibold text-emerald-500">
+                      {loadingDashboardStats
+                        ? "..."
+                        : typeof dashboardStats?.auditPassRate === "number"
+                          ? `${dashboardStats.auditPassRate}%`
+                          : "—"}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* =================================================

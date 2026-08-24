@@ -222,8 +222,10 @@ expanded.
     )
 
     structured_llm = llm.with_structured_output(
-        ProposalDraft
-    )
+    ProposalDraft,
+    method="json_schema",
+    strict=True,
+)
 
     return prompt | structured_llm
 
@@ -334,7 +336,9 @@ def get_proposal_revision_chain():
     revision_prompt = get_proposal_revision_prompt()
 
     structured_llm = llm.with_structured_output(
-        ProposalDraft
-    )
+    ProposalDraft,
+    method="json_schema",
+    strict=True,
+)
 
     return revision_prompt | structured_llm

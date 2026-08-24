@@ -7,6 +7,145 @@ const router = express.Router();
 
 
 // =====================================================
+// DASHBOARD INTELLIGENCE
+// =====================================================
+
+router.get(
+  "/dashboard",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const history = await ProposalHistory.find({
+        user: req.user.userId,
+      })
+        .sort({
+          createdAt: -1,
+        })
+        .lean();
+
+      const totalProposals = history.length;
+
+      const drafts = history.filter(
+        (item) => item.status === "draft"
+      ).length;
+
+      const audited = history.filter(
+        (item) => item.status === "audited"
+      ).length;
+
+      const submitted = history.filter(
+        (item) => item.status === "submitted"
+      ).length;
+
+      const accepted = history.filter(
+        (item) => item.status === "accepted"
+      ).length;
+
+      const rejected = history.filter(
+        (item) => item.status === "rejected"
+      ).length;
+
+      // ---------------------------------------------------
+// AUDIT INTELLIGENCE
+// ---------------------------------------------------
+
+const auditedRecords = history.filter(
+  (item) =>
+    item.audit?.status === "PASS" ||
+    item.audit?.status === "FAIL"
+);
+
+const totalAudited = auditedRecords.length;
+
+// Accuracy is optional because older history records
+// may not contain an accuracyScore.
+const accuracyRecords = history.filter(
+  (item) =>
+    typeof item.audit?.accuracyScore === "number"
+);
+
+const averageAccuracy =
+  accuracyRecords.length > 0
+    ? Math.round(
+        accuracyRecords.reduce(
+          (sum, item) =>
+            sum + item.audit.accuracyScore,
+          0
+        ) / accuracyRecords.length
+      )
+    : 0;
+
+const passedAudits = history.filter(
+  (item) =>
+    item.audit?.status === "PASS"
+).length;
+
+const failedAudits = history.filter(
+  (item) =>
+    item.audit?.status === "FAIL"
+).length;
+
+const completedAudits =
+  passedAudits + failedAudits;
+
+const auditPassRate =
+  completedAudits > 0
+    ? Math.round(
+        (passedAudits / completedAudits) * 100
+      )
+    : 0;
+
+      const recentProposals = history
+        .slice(0, 5)
+        .map((item) => ({
+          id: item._id,
+          grantId: item.grant?.grantId || "",
+          grantTitle:
+            item.grant?.grantTitle || "",
+          funderName:
+            item.grant?.funderName || "",
+          status: item.status,
+          auditStatus:
+            item.audit?.status || null,
+          accuracyScore:
+            item.audit?.accuracyScore ?? null,
+          wordCount: item.wordCount || 0,
+          createdAt: item.createdAt,
+        }));
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          totalProposals,
+          drafts,
+          audited,
+          submitted,
+          accepted,
+          rejected,
+          totalAudited,
+          averageAccuracy,
+          passedAudits,
+          failedAudits,
+          auditPassRate,
+          recentProposals,
+        },
+      });
+    } catch (error) {
+      console.error(
+        "Dashboard intelligence error:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Unable to load dashboard intelligence",
+      });
+    }
+  }
+);
+
+// =====================================================
 // GET ALL HISTORY
 // =====================================================
 

@@ -23,6 +23,8 @@ type ProposalData = {
     errors: string[];
   };
   factuality_audit: string;
+  factuality_audit_score: number;
+factuality_audit_summary: string;
   revision_count: number;
   status: string;
 };
@@ -490,13 +492,18 @@ export default function ProposalGeneratorPage() {
           },
 
           audit: {
-            status: proposalData.factuality_audit
-              .toLowerCase()
-              .includes("pass: true")
-              ? "PASS"
-              : "FAIL",
-            accuracyScore: null,
-            totalChecked: 0,
+  status: proposalData.factuality_audit
+    .toLowerCase()
+    .includes("pass: true")
+    ? "PASS"
+    : "FAIL",
+
+  accuracyScore:
+    typeof proposalData.factuality_audit_score === "number"
+      ? proposalData.factuality_audit_score
+      : 0,
+
+  totalChecked: 0,
             verified: 0,
             mismatches: 0,
             notFound: 0,
@@ -511,7 +518,10 @@ export default function ProposalGeneratorPage() {
             proposalData.constraint_validation.word_limit ||
             Number(wordLimit) ||
             1500,
-          status: "audited",
+          status:
+  proposalData.status === "accepted"
+    ? "accepted"
+    : "audited",
         }),
       }
     );
@@ -1625,4 +1635,4 @@ export default function ProposalGeneratorPage() {
       </div>
     </main>
   );
-}
+} 
