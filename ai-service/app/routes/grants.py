@@ -146,7 +146,16 @@ def enrich_matches(matches, requested_amount, requested_currency):
                 "grant_title": match.grant_title,
                 "alignment_score": match.alignment_score,
                 "why_it_matches": match.why_it_matches,
-                "eligibility_notes": match.eligibility_notes,
+"eligibility_notes": match.eligibility_notes,
+
+"evidence": [
+    {
+        "source": evidence.source,
+        "relevance": evidence.relevance,
+        "excerpt": evidence.excerpt,
+    }
+    for evidence in match.evidence
+],
 
                 "funding": {
                     "min": minimum,

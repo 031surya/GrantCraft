@@ -1,6 +1,22 @@
 from pydantic import BaseModel, Field
 
 
+class GrantEvidence(BaseModel):
+    source: str = Field(
+        description="Source document supporting the grant match"
+    )
+
+    relevance: float = Field(
+        description="Relevance score of the evidence",
+        ge=0,
+        le=1
+    )
+
+    excerpt: str = Field(
+        description="Short excerpt from the source document supporting the match"
+    )
+
+
 class GrantMatch(BaseModel):
     grant_id: str = Field(
         description="Unique identifier of the grant opportunity"
@@ -24,8 +40,13 @@ class GrantMatch(BaseModel):
         description="Short evidence-based reasons why the project matches the grant"
     )
 
-    eligibility_notes: str = Field(
+    eligibility_notes: list[str] = Field(
         description="Evidence-based eligibility notes and missing information"
+    )
+
+    evidence: list[GrantEvidence] = Field(
+        default=[],
+        description="NGO evidence supporting the grant match"
     )
 
 

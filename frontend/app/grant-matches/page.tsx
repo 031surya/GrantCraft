@@ -3,13 +3,20 @@
 import { FormEvent, useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
 
+type GrantEvidence = {
+  source: string;
+  relevance: number;
+  excerpt: string;
+};
+
 type GrantMatch = {
   grant_id: string;
   funder_name: string;
   grant_title: string;
   alignment_score: number;
   why_it_matches?: string[];
-  eligibility_notes?: string;
+  eligibility_notes?: string[];
+  evidence?: GrantEvidence[];
   funding_amount?: { min: number; max: number; currency: string };
   application_requirements?: {
     proposal_format?: string;
@@ -378,12 +385,104 @@ export default function GrantMatchesPage() {
                       </div>
                     ) : null}
 
-                    {grant.eligibility_notes && (
-                      <div className={`mt-5 rounded-xl border p-4 ${darkMode ? "border-amber-400/10 bg-amber-400/[0.035]" : "border-amber-200 bg-amber-50"}`}>
-                        <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-amber-500">Eligibility / verification</p>
-                        <p className={`mt-2 text-xs leading-5 ${darkMode ? "text-white/40" : "text-slate-600"}`}>{grant.eligibility_notes}</p>
-                      </div>
-                    )}
+                    {grant.eligibility_notes?.length ? (
+  <div
+    className={`mt-5 rounded-xl border p-4 ${
+      darkMode
+        ? "border-amber-400/10 bg-amber-400/[0.035]"
+        : "border-amber-200 bg-amber-50"
+    }`}
+  >
+    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-amber-500">
+      Eligibility / verification
+    </p>
+
+    <ul className="mt-2 space-y-1.5">
+      {grant.eligibility_notes.map((note, i) => (
+        <li
+          key={`${grant.grant_id}-eligibility-${i}`}
+          className={`text-xs leading-5 ${
+            darkMode ? "text-white/40" : "text-slate-600"
+          }`}
+        >
+          • {note}
+        </li>
+      ))}
+    </ul>
+  </div>
+) : null}
+
+{grant.evidence?.length ? (
+  <div className="mt-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p
+          className={`text-[9px] font-bold uppercase tracking-[0.18em] ${
+            darkMode ? "text-cyan-300/60" : "text-cyan-600"
+          }`}
+        >
+          Evidence
+        </p>
+
+        <p
+          className={`mt-1 text-xs ${
+            darkMode ? "text-white/25" : "text-slate-400"
+          }`}
+        >
+          Retrieved evidence supporting this match
+        </p>
+      </div>
+
+      <span
+        className={`rounded-full border px-2.5 py-1 text-[9px] ${
+          darkMode
+            ? "border-cyan-400/10 bg-cyan-400/[0.04] text-cyan-300/60"
+            : "border-cyan-200 bg-cyan-50 text-cyan-600"
+        }`}
+      >
+        {grant.evidence.length} source
+        {grant.evidence.length === 1 ? "" : "s"}
+      </span>
+    </div>
+
+    <div className="mt-3 space-y-3">
+      {grant.evidence.map((item, i) => (
+        <div
+          key={`${grant.grant_id}-evidence-${i}`}
+          className={`rounded-xl border p-4 ${
+            darkMode
+              ? "border-white/[0.06] bg-white/[0.02]"
+              : "border-slate-200 bg-slate-50/70"
+          }`}
+        >
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <p className="text-xs font-semibold">
+              {item.source}
+            </p>
+
+            <span
+              className={`shrink-0 rounded-full border px-2 py-1 text-[9px] ${
+                darkMode
+                  ? "border-emerald-400/10 bg-emerald-400/[0.04] text-emerald-300"
+                  : "border-emerald-200 bg-emerald-50 text-emerald-600"
+              }`}
+            >
+              {Math.round(item.relevance * 100)}% relevance
+            </span>
+          </div>
+
+          <p
+            className={`mt-3 text-xs leading-5 ${
+              darkMode ? "text-white/45" : "text-slate-600"
+            }`}
+          >
+            "{item.excerpt}"
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+) : null}
 
                     <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                       <div className={`rounded-xl border p-3 ${darkMode ? "border-white/[0.06] bg-white/[0.02]" : "border-slate-200 bg-white"}`}>

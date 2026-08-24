@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from rag.grant_matcher import get_grant_matching_chain
+from app.rag.grant_matcher import get_grant_matching_chain
 
 
 DATA_FILE = (
