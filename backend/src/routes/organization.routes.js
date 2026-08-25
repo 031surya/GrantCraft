@@ -18,7 +18,7 @@ router.get(
     try {
       const organization =
         await Organization.findOne({
-          owner: req.user.id,
+          owner: req.user.userId,
         });
 
       return res.json({
@@ -64,10 +64,10 @@ router.put(
       const organization =
         await Organization.findOneAndUpdate(
           {
-            owner: req.user.id,
+            owner: req.user.userId,
           },
           {
-            owner: req.user.id,
+            owner: req.user.userId,
             organizationName,
             organizationType,
             location,

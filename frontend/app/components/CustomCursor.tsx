@@ -23,11 +23,12 @@ export default function CustomCursor() {
 
   useEffect(() => {
     // =====================================================
-    // DISABLE CUSTOM CURSOR ON TABLET / MOBILE / TOUCH
+    // DISABLE CUSTOM CURSOR ON TOUCH DEVICES
     // =====================================================
 
-    const isTouchDevice =
-      window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const isTouchDevice = window.matchMedia(
+      "(hover: none), (pointer: coarse)"
+    ).matches;
 
     if (isTouchDevice) {
       return;
@@ -63,7 +64,7 @@ export default function CustomCursor() {
       const target = event.target as HTMLElement;
 
       const interactive = target.closest(
-        "a, button, [role='button']"
+        "a, button, [role='button'], input, textarea, select"
       );
 
       setHovering(Boolean(interactive));
@@ -71,9 +72,6 @@ export default function CustomCursor() {
 
     // =====================================================
     // CLICK
-    //
-    // Visual effect → everywhere
-    // Sound → buttons / links only
     // =====================================================
 
     const handleClick = (event: MouseEvent) => {
@@ -91,12 +89,12 @@ export default function CustomCursor() {
         clickAudio.currentTime = 0;
 
         clickAudio.play().catch(() => {
-          // Ignore browser audio restrictions.
+          // Browser audio restrictions are ignored.
         });
       }
 
       // ---------------------------------------------------
-      // CLICK EFFECT
+      // CREATE CLICK EFFECT
       // ---------------------------------------------------
 
       const effect: ClickEffect = {
@@ -111,16 +109,16 @@ export default function CustomCursor() {
       ]);
 
       // ---------------------------------------------------
-      // REMOVE EFFECT
+      // REMOVE CLICK EFFECT
       // ---------------------------------------------------
 
-      setTimeout(() => {
+      window.setTimeout(() => {
         setClickEffects((current) =>
           current.filter(
             (item) => item.id !== effect.id
           )
         );
-      }, 450);
+      }, 650);
     };
 
     // =====================================================
@@ -129,6 +127,10 @@ export default function CustomCursor() {
 
     const handleMouseLeave = () => {
       setVisible(false);
+    };
+
+    const handleMouseEnter = () => {
+      setVisible(true);
     };
 
     // =====================================================
@@ -151,9 +153,14 @@ export default function CustomCursor() {
       true
     );
 
-    document.addEventListener(
+    document.documentElement.addEventListener(
       "mouseleave",
       handleMouseLeave
+    );
+
+    document.documentElement.addEventListener(
+      "mouseenter",
+      handleMouseEnter
     );
 
     // =====================================================
@@ -177,9 +184,14 @@ export default function CustomCursor() {
         true
       );
 
-      document.removeEventListener(
+      document.documentElement.removeEventListener(
         "mouseleave",
         handleMouseLeave
+      );
+
+      document.documentElement.removeEventListener(
+        "mouseenter",
+        handleMouseEnter
       );
     };
   }, []);
@@ -187,8 +199,7 @@ export default function CustomCursor() {
   return (
     <>
       {/* ===================================================
-          GLOBAL CLICK EFFECT
-          DESKTOP ONLY
+          CLICK BURSTS
           =================================================== */}
 
       {clickEffects.map((effect) => (
@@ -200,16 +211,25 @@ export default function CustomCursor() {
             top: effect.y,
           }}
         >
-          <span />
-          <span />
-          <span />
-          <span />
+          {/* Main ripple */}
+          <span className="grant-click-ring" />
+
+          {/* Secondary ripple */}
+          <span className="grant-click-ring grant-click-ring-delay" />
+
+          {/* Four particles */}
+          <span className="grant-click-particle particle-1" />
+          <span className="grant-click-particle particle-2" />
+          <span className="grant-click-particle particle-3" />
+          <span className="grant-click-particle particle-4" />
+
+          {/* Center flash */}
+          <span className="grant-click-core" />
         </div>
       ))}
 
       {/* ===================================================
-          CUSTOM CURSOR
-          DESKTOP ONLY
+          CUSTOM CYAN CURSOR
           =================================================== */}
 
       {visible && (
@@ -224,7 +244,29 @@ export default function CustomCursor() {
             top: position.y,
           }}
         >
-          <div className="grant-cursor-arrow" />
+          {/* Outer glow */}
+          <div className="grant-cursor-glow" />
+
+          {/* Traditional arrow */}
+          <svg
+            className="grant-cursor-arrow"
+            width="28"
+            height="34"
+            viewBox="0 0 28 34"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.2 1.8L24.9 15.9C26.2 16.7 25.9 18.6 24.5 19L17.2 21.1L22.4 30.2C23 31.3 22.6 32.7 21.5 33.3L19.1 34.6C18 35.2 16.6 34.8 16 33.7L10.8 24.5L5.5 29.8C4.5 30.8 2.7 30.1 2.6 28.7L0.3 4C0.2 2.2 0.8 1 2.2 1.8Z"
+              fill="#00D9FF"
+              stroke="#E6FBFF"
+              strokeWidth="1.4"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          {/* Inner cyan highlight */}
+          <div className="grant-cursor-core-glow" />
         </div>
       )}
     </>

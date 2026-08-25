@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
@@ -15,9 +16,38 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+const FRONTEND_URL =
+  process.env.FRONTEND_URL || "http://localhost:3000";
+
 // Middleware
-app.use(cors());
-app.use(express.json());
+
+// Security headers
+app.use(helmet());
+
+// CORS
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
+  })
+);
+
+app.use(
+  express.json({
+    limit: "1mb",
+  })
+);
 
 // Authentication routes
 app.use("/api/auth", authRoutes);
@@ -64,5 +94,23 @@ const startServer = async () => {
     );
   });
 };
+
+
+// =====================================================
+// GLOBAL ERROR HANDLER
+// =====================================================
+
+app.use((error, req, res, next) => {
+  console.error("Unhandled server error:", error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  return res.status(500).json({
+    success: false,
+    message: "Internal server error",
+  });
+});
 
 startServer();

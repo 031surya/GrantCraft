@@ -146,230 +146,6 @@ html.dark body {
 }
 
 /* =========================================================
-   GRANTCRAFT MODERN CURSOR
-   ========================================================= */
-
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  [role="button"] {
-    cursor: none;
-  }
-
-  /* =========================================================
-   GRANTCRAFT — MODERN CUSTOM CURSOR
-   ========================================================= */
-
-.grant-cursor {
-  position: fixed;
-
-  width: 18px;
-  height: 18px;
-
-  pointer-events: none;
-
-  z-index: 99999;
-
-  transform: translate(-2px, -2px);
-
-  transition:
-    transform 120ms ease,
-    opacity 150ms ease;
-}
-
-/* Main cursor arrow */
-.grant-cursor-arrow {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  width: 0;
-  height: 0;
-
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-  border-left: 12px solid #06b6d4;
-
-  filter:
-    drop-shadow(0 0 2px #ffffff)
-    drop-shadow(0 0 7px rgba(6, 182, 212, 0.8));
-
-  transform: rotate(-8deg);
-
-  transition:
-    transform 150ms ease,
-    filter 150ms ease;
-}
-
-/* ---------------------------------------------------------
-   Hovering interactive elements
-   --------------------------------------------------------- */
-
-.grant-cursor-hover {
-  transform: translate(-2px, -2px) scale(1.25);
-}
-
-.grant-cursor-hover .grant-cursor-arrow {
-  border-left-color: #7c3aed;
-
-  filter:
-    drop-shadow(0 0 2px #ffffff)
-    drop-shadow(0 0 8px rgba(124, 58, 237, 0.9))
-    drop-shadow(0 0 16px rgba(6, 182, 212, 0.5));
-}
-
-/* ---------------------------------------------------------
-   Dark mode
-   --------------------------------------------------------- */
-
-.dark .grant-cursor-arrow {
-  border-left-color: #22d3ee;
-
-  filter:
-    drop-shadow(0 0 2px #ffffff)
-    drop-shadow(0 0 8px rgba(34, 211, 238, 0.95))
-    drop-shadow(0 0 16px rgba(34, 211, 238, 0.55));
-}
-
-.dark .grant-cursor-hover .grant-cursor-arrow {
-  border-left-color: #a78bfa;
-
-  filter:
-    drop-shadow(0 0 2px #ffffff)
-    drop-shadow(0 0 9px rgba(167, 139, 250, 1))
-    drop-shadow(0 0 18px rgba(34, 211, 238, 0.6));
-}
-}
-
-/* =========================================================
-   GRANTCRAFT — INTENSE CLICK BURST
-   ========================================================= */
-
-@keyframes grant-click-burst {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(0.2);
-  }
-
-  35% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.15);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.45);
-  }
-}
-
-@keyframes grant-click-ray {
-  0% {
-    opacity: 1;
-    height: 5px;
-    transform:
-      translate(-50%, -50%)
-      rotate(var(--rotation))
-      translateY(0)
-      scale(0.5);
-  }
-
-  35% {
-    opacity: 1;
-    height: 11px;
-    transform:
-      translate(-50%, -50%)
-      rotate(var(--rotation))
-      translateY(-9px)
-      scale(1.2);
-  }
-
-  100% {
-    opacity: 0;
-    height: 14px;
-    transform:
-      translate(-50%, -50%)
-      rotate(var(--rotation))
-      translateY(-24px)
-      scale(0.7);
-  }
-}
-
-.grant-click-burst {
-  position: fixed;
-  z-index: 99998;
-
-  width: 38px;
-  height: 38px;
-
-  pointer-events: none;
-
-  animation: grant-click-burst 420ms
-    cubic-bezier(0.16, 1, 0.3, 1)
-    forwards;
-}
-
-.grant-click-burst span {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 3px;
-  height: 8px;
-
-  border-radius: 999px;
-
-  background: #06b6d4;
-
-  box-shadow:
-    0 0 6px rgba(6, 182, 212, 0.95),
-    0 0 14px rgba(6, 182, 212, 0.75),
-    0 0 24px rgba(34, 211, 238, 0.45);
-
-  animation:
-    grant-click-ray 420ms
-    cubic-bezier(0.16, 1, 0.3, 1)
-    forwards;
-}
-
-.grant-click-burst span:nth-child(1) {
-  --rotation: 0deg;
-}
-
-.grant-click-burst span:nth-child(2) {
-  --rotation: 90deg;
-}
-
-.grant-click-burst span:nth-child(3) {
-  --rotation: 180deg;
-}
-
-.grant-click-burst span:nth-child(4) {
-  --rotation: 270deg;
-}
-
-/* =========================================================
-   DARK MODE
-   ========================================================= */
-
-.dark .grant-click-burst span {
-  background: #22d3ee;
-
-  box-shadow:
-    0 0 7px rgba(34, 211, 238, 1),
-    0 0 16px rgba(34, 211, 238, 0.9),
-    0 0 28px rgba(139, 92, 246, 0.7);
-}
-
-/* =========================================================
    GRANTCRAFT INTELLIGENCE CORE
    ========================================================= */
 
@@ -632,3 +408,334 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
 } 
+
+/* =========================================================
+   GRANTCRAFT — CYAN TRADITIONAL CURSOR
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+  /* -------------------------------------------------------
+     HIDE NATIVE CURSOR
+     ------------------------------------------------------- */
+
+  html,
+  body,
+  body * {
+    cursor: none !important;
+  }
+
+  /* -------------------------------------------------------
+     CURSOR CONTAINER
+     ------------------------------------------------------- */
+
+  .grant-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 12px;
+  height: 16px;
+
+  pointer-events: none;
+  z-index: 2147483647;
+
+  transform: translate(-1px, -1px);
+
+  transition:
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+  /* -------------------------------------------------------
+     TRADITIONAL ARROW
+     ------------------------------------------------------- */
+
+  .grant-cursor-arrow {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 12px;
+  height: 16px;
+
+  display: block;
+
+  transform-origin: 2px 2px;
+
+  filter:
+    drop-shadow(0 0 3px rgba(0, 217, 255, 0.75))
+    drop-shadow(0 0 7px rgba(0, 217, 255, 0.3));
+
+  transition:
+    transform 150ms ease,
+    filter 150ms ease;
+}
+  /* -------------------------------------------------------
+     SOFT CYAN AURA
+     ------------------------------------------------------- */
+
+  .grant-cursor-glow {
+  left: 2px;
+  top: 2px;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 217, 255, 0.15);
+
+  filter: blur(7px);
+
+  opacity: 0.55;
+}
+
+  /* -------------------------------------------------------
+     SMALL WHITE HIGHLIGHT
+     ------------------------------------------------------- */
+
+  .grant-cursor-core-glow {
+    position: absolute;
+
+    left: 4px;
+    top: 4px;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    filter: blur(0.5px);
+
+    opacity: 0.85;
+
+    pointer-events: none;
+  }
+
+  /* =======================================================
+     BUTTON / LINK HOVER
+     ======================================================= */
+
+.grant-cursor-hover {
+  transform:
+    translate(-1px, -1px)
+    scale(1.05);
+}
+
+  .grant-cursor-hover .grant-cursor-arrow {
+    filter:
+      drop-shadow(
+        0 0 4px rgba(0, 217, 255, 0.95)
+      )
+      drop-shadow(
+        0 0 10px rgba(0, 217, 255, 0.55)
+      )
+      drop-shadow(
+        0 0 18px rgba(0, 217, 255, 0.28)
+      );
+  }
+
+  .grant-cursor-hover .grant-cursor-glow {
+    transform: scale(1.35);
+
+    opacity: 0.9;
+  }
+
+  /* =======================================================
+     CLICK EFFECT
+     ======================================================= */
+
+  .grant-click-burst {
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 1px;
+    height: 1px;
+
+    pointer-events: none;
+
+    z-index: 2147483646;
+  }
+
+  /* -------------------------------------------------------
+     OUTER RIPPLE
+     ------------------------------------------------------- */
+
+  .grant-click-ring {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 9px;
+    height: 9px;
+
+    margin-left: -4.5px;
+    margin-top: -4.5px;
+
+    border:
+      1.5px solid
+      rgba(0, 217, 255, 0.9);
+
+    border-radius: 50%;
+
+    box-shadow:
+      0 0 5px rgba(0, 217, 255, 0.8),
+      0 0 12px rgba(0, 217, 255, 0.35);
+
+    animation:
+      grant-cursor-ripple
+      520ms
+      cubic-bezier(0.16, 1, 0.3, 1)
+      forwards;
+  }
+
+  /* -------------------------------------------------------
+     SECOND RIPPLE
+     ------------------------------------------------------- */
+
+  .grant-click-ring-delay {
+    animation-delay: 65ms;
+
+    opacity: 0.55;
+  }
+
+  /* -------------------------------------------------------
+     CLICK CENTER
+     ------------------------------------------------------- */
+
+  .grant-click-core {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 6px;
+    height: 6px;
+
+    margin-left: -3px;
+    margin-top: -3px;
+
+    border-radius: 50%;
+
+    background: #00d9ff;
+
+    box-shadow:
+      0 0 5px rgba(0, 217, 255, 1),
+      0 0 12px rgba(0, 217, 255, 0.7);
+
+    animation:
+      grant-cursor-core
+      350ms
+      ease-out
+      forwards;
+  }
+
+  /* =======================================================
+     CLICK PARTICLES
+     ======================================================= */
+
+  .grant-click-particle {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 3px;
+    height: 3px;
+
+    margin-left: -1.5px;
+    margin-top: -1.5px;
+
+    border-radius: 50%;
+
+    background: #00d9ff;
+
+    box-shadow:
+      0 0 5px rgba(0, 217, 255, 0.95),
+      0 0 9px rgba(0, 217, 255, 0.45);
+
+    animation:
+      grant-click-particle
+      450ms
+      cubic-bezier(0.16, 1, 0.3, 1)
+      forwards;
+  }
+
+  .particle-1 {
+    --particle-x: 0px;
+    --particle-y: -20px;
+  }
+
+  .particle-2 {
+    --particle-x: 20px;
+    --particle-y: 0px;
+  }
+
+  .particle-3 {
+    --particle-x: 0px;
+    --particle-y: 20px;
+  }
+
+  .particle-4 {
+    --particle-x: -20px;
+    --particle-y: 0px;
+  }
+
+  /* =======================================================
+     ANIMATIONS
+     ======================================================= */
+
+  @keyframes grant-cursor-ripple {
+
+    0% {
+      transform: scale(0.5);
+      opacity: 0.9;
+    }
+
+    100% {
+      transform: scale(4.2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes grant-cursor-core {
+
+    0% {
+      transform: scale(1);
+      opacity: 0.95;
+    }
+
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes grant-click-particle {
+
+    0% {
+      transform:
+        translate(0, 0)
+        scale(1);
+
+      opacity: 1;
+    }
+
+    100% {
+      transform:
+        translate(
+          var(--particle-x),
+          var(--particle-y)
+        )
+        scale(0);
+
+      opacity: 0;
+    }
+  }
+}
