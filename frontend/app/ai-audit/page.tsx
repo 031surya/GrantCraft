@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type AuditResult = {
   audit_status: "PASS" | "FAIL";
@@ -169,7 +170,7 @@ export default function AIAuditPage() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/me",
+          `${API_URL}/api/auth/me`,
           {
             method: "GET",
             headers: {
@@ -292,7 +293,7 @@ export default function AIAuditPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/audit",
+        `${API_URL}/api/audit`,
         {
           method: "POST",
           headers: {

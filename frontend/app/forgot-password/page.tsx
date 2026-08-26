@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 export default function ForgotPasswordPage() {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,7 +30,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/forgot-password",
+        `${API_URL}/api/auth/forgot-password`,
         {
           method: "POST",
           headers: {
@@ -394,7 +395,6 @@ export default function ForgotPasswordPage() {
         </div>
 
       </div>
-
     </main>
   );
 }

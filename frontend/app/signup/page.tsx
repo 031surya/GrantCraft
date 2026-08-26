@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 export default function SignupPage() {
   const [darkMode, setDarkMode] = useState(false);
@@ -47,7 +48,7 @@ export default function SignupPage() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/register",
+        `${API_URL}/api/auth/register`,
         {
           method: "POST",
           headers: {

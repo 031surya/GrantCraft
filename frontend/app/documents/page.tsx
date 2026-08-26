@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type UploadResult = {
   source: string;
@@ -90,7 +91,7 @@ export default function DocumentsPage() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/documents",
+        `${API_URL}/api/documents`,
         {
           method: "GET",
           headers: {
@@ -242,7 +243,7 @@ export default function DocumentsPage() {
       );
 
       const response = await fetch(
-        "http://localhost:5000/api/documents/upload",
+        `${API_URL}/api/documents/upload`,
         {
           method: "POST",
           headers: {
@@ -325,7 +326,7 @@ export default function DocumentsPage() {
       setError("");
 
       const response = await fetch(
-        `http://localhost:5000/api/documents/${documentId}`,
+        `${API_URL}/api/documents/${documentId}`,
         {
           method: "DELETE",
           headers: {

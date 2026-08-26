@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type HistoryItem = {
   _id: string;
@@ -181,7 +182,7 @@ export default function HistoryPage() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/me",
+          `${API_URL}/api/auth/me`,
           {
             method: "GET",
             headers: {
@@ -257,7 +258,7 @@ export default function HistoryPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/history",
+        `${API_URL}/api/history`,
         {
           method: "GET",
           headers: {
@@ -365,7 +366,7 @@ export default function HistoryPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/history/${id}`,
+        `${API_URL}/api/history/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -432,7 +433,7 @@ export default function HistoryPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/history/${id}/status`,
+        `${API_URL}/api/history/${id}/status`,
         {
           method: "PATCH",
           headers: {

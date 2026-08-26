@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type Organization = {
   _id?: string;
@@ -19,7 +20,6 @@ type Organization = {
   updatedAt?: string;
 };
 
-const API_URL = "http://localhost:5000";
 
 export default function OrganizationPage() {
   const [darkMode, setDarkMode] = useState(false);

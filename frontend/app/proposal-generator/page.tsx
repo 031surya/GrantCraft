@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type Proposal = {
   organization_background: string;
@@ -168,7 +169,7 @@ export default function ProposalGeneratorPage() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/me",
+          `${API_URL}/api/auth/me`,
           {
             method: "GET",
             headers: {
@@ -325,7 +326,7 @@ export default function ProposalGeneratorPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/proposals/generate",
+        `${API_URL}/api/proposals/generate`,
         {
           method: "POST",
           headers: {
@@ -452,7 +453,7 @@ export default function ProposalGeneratorPage() {
     const proposal = proposalData.proposal;
 
     const response = await fetch(
-      "http://localhost:5000/api/history",
+      `${API_URL}/api/history`,
       {
         method: "POST",
         headers: {

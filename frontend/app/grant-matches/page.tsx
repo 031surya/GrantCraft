@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
 type GrantEvidence = {
   source: string;
@@ -85,7 +86,7 @@ export default function GrantMatchesPage() {
         return;
       }
       try {
-        const response = await fetch("http://localhost:5000/api/auth/me", {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -142,7 +143,7 @@ export default function GrantMatchesPage() {
     setMatches([]);
 
     try {
-      const response = await fetch("http://localhost:5000/api/grants/match", {
+      const response = await fetch(`${API_URL}/api/grants/match`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

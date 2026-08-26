@@ -1,10 +1,16 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import {
+  FormEvent,
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import CustomCursor from "../components/CustomCursor";
+import { API_URL } from "../../lib/api";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
 
   const [darkMode, setDarkMode] = useState(false);
@@ -74,7 +80,7 @@ export default function ResetPasswordPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/reset-password",
+        `${API_URL}/api/auth/reset-password`,
         {
           method: "POST",
           headers: {
@@ -475,5 +481,21 @@ export default function ResetPasswordPage() {
       </div>
 
     </main>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900">
+          <div className="text-sm font-medium">
+            Loading reset password...
+          </div>
+        </main>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
