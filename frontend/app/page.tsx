@@ -1132,7 +1132,7 @@ export default function Home() {
 
     <div className="mt-8 h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-300 bg-slate-100 p-1 shadow-[0_0_40px_rgba(34,211,238,0.2)] dark:border-cyan-400/30 dark:bg-slate-900">
       <img
-        src="/lavanya1.png"
+        src="/lavanya.png"
         alt="Lavanya Saparapu"
         className="h-full w-full rounded-full object-cover"
       />
